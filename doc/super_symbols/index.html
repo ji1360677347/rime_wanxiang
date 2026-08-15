@@ -1,0 +1,4944 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="万象拼音 Rime 输入方案与配置文档">
+      
+      
+      
+        <link rel="canonical" href="https://amzxyz.github.io/rime-wanxiang/doc/super_symbols/">
+      
+      
+        <link rel="prev" href="../paired_symbols/">
+      
+      
+        <link rel="next" href="../super_processor/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../material/leaf">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>超级符号 - 万象拼音</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#super-symbols" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="万象拼音" class="md-header__button md-logo" aria-label="万象拼音" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            万象拼音
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              超级符号
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="切换到暗黑模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗黑模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="切换到亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/amzxyz/rime-wanxiang" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amzxyz/rime-wanxiang
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  快速上手
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../rime_tree/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  特色功能
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../shijian/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Lua 扩展
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Rime%E8%AE%BE%E8%AE%A1%E9%80%BB%E8%BE%91%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%93%B2%E5%AD%A6/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  进阶配置
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../2026-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  项目动态
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="万象拼音" class="md-nav__button md-logo" aria-label="万象拼音" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    万象拼音
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/amzxyz/rime-wanxiang" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    amzxyz/rime-wanxiang
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速上手
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    快速上手
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    方案介绍与版本对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Windows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weasel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weasel 小狼毫
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    macOS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../squirrel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Squirrel 鼠须管
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fcitx5-mac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fcitx5 macOS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fcitx5-linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fcitx5 Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ibus-rime.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBus Rime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iOS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    iOS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hamster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamster 仓输入法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hamster3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamster3 元书输入法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trime 同文输入法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fcitx5-android/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fcitx5 Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HarmonyOS NEXT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HarmonyOS NEXT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chaoyue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超越输入法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进阶安装
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    进阶安装
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    万象工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    东风破 Plum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手动设置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    特色功能
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    特色功能
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rime_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    万象目录架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dicts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中英词库说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shortcut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快捷键说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aux_code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    辅助码系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reverse_lookup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生僻字反查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../english/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中英与混合编码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layouts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9/14/18键转写
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fuzzy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模糊音配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_words/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    高阶造词
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word_creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    错音错字提示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../XCompose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    符号合成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lua 扩展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lua 扩展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shijian/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    时间日期
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_comment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超级注释
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_tips/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超级提示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_lookup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    候选辅筛
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_predict/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语境预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    输入统计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_replacer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超级替换
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手动排序
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick_symbol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paired_symbols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成对符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超级符号
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    超级符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、触发方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、精确查询的点分规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、精确查询的点分规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于修饰符顺序
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、字符分类占位符与自动展开
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、模糊搜索规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、模糊搜索规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 单关键字搜索
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 点分多关键字搜索
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、模式提示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、候选注释与 Typst 名称
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、点分命名规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、点分命名规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见修饰符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌套名称
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、常用符号速查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、常用符号速查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        希腊字母
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        箭头
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数学运算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        货币符号
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分隔符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emoji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用 Emoji
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、模糊搜索示例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、与现有功能的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、中文 Tips 联动
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十二、数据来源与文件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十二、数据来源与文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十三、配置参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十四、Triggers 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十四、Triggers 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prefix_sym-prefix_emoji-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prefix_sym / prefix_emoji 与 triggers 的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十五、当前并不是任意数据类型加载器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recognizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十六、修改前缀时的 Recognizer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十七、技术实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十七、技术实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 数据加载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-do_exact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 精确查询 do_exact
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-do_fuzzy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 模糊查询 do_fuzzy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 分类展开 Processor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-translator-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Translator / Processor 导出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 注释保留
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十八、使用建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super_processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    按键处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../charset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    字符过滤
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../candidate_slicer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    候选切割
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RUNV/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    魔法字母
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../profile-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    性能评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进阶配置
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    进阶配置
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Rime%E8%AE%BE%E8%AE%A1%E9%80%BB%E8%BE%91%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%93%B2%E5%AD%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rime 工作机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patch%E6%96%B9%E6%B3%95%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Patch 方法论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema_custom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自定义万象方案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dicts_sync/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    词库管理与同步
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIME%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rime 配置手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIME%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rime 配置指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../key/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    按键映射列表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目动态
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    项目动态
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 年中词库报告
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../400%2Bgram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026 年中模型更新
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、触发方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、精确查询的点分规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、精确查询的点分规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于修饰符顺序
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、字符分类占位符与自动展开
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、模糊搜索规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、模糊搜索规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 单关键字搜索
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 点分多关键字搜索
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、模式提示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、候选注释与 Typst 名称
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、点分命名规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、点分命名规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见修饰符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌套名称
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、常用符号速查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、常用符号速查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        希腊字母
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        箭头
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数学运算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        货币符号
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分隔符
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emoji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用 Emoji
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、模糊搜索示例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、与现有功能的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、中文 Tips 联动
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十二、数据来源与文件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十二、数据来源与文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十三、配置参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十四、Triggers 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十四、Triggers 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prefix_sym-prefix_emoji-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prefix_sym / prefix_emoji 与 triggers 的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十五、当前并不是任意数据类型加载器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recognizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十六、修改前缀时的 Recognizer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十七、技术实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十七、技术实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 数据加载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-do_exact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 精确查询 do_exact
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-do_fuzzy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 模糊查询 do_fuzzy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 分类展开 Processor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-translator-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Translator / Processor 导出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 注释保留
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十八、使用建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="super-symbols">超级符号 (Super Symbols)</h1>
+<p>万象拼音集成了 <a href="https://github.com/typst/codex">typst/codex</a> 的符号命名数据，可通过符号名称直接检索并输入大量 Unicode 符号与 Emoji。</p>
+<p>数据沿用 Typst / Codex 的点分命名方式，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>arrow.r.double
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>chess.king.white
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>apple.red
+</code></pre></div>
+<p>在万象中分别通过 <code>/sym</code> 与 <code>/emoji</code> 进入符号和表情查询。</p>
+<p>Typst 官方符号表可参考：</p>
+<ul>
+<li><code>sym</code>（符号）：<a href="https://typst.app/docs/reference/symbols/sym/">Typst Symbols</a></li>
+<li><code>emoji</code>（表情）：<a href="https://typst.app/docs/reference/symbols/emoji/">Typst Emoji</a></li>
+</ul>
+<hr />
+<h2 id="_1">一、触发方式</h2>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.&lt;name&gt;</code></td>
+<td>按点分名称查询符号</td>
+<td><code>/sym.alpha</code> → α</td>
+</tr>
+<tr>
+<td><code>/sym.&lt;root&gt;.&lt;mod1&gt;.&lt;mod2&gt;...</code></td>
+<td>根名称 + 修饰符链查询</td>
+<td><code>/sym.arrow.r.double</code> → ⇒</td>
+</tr>
+<tr>
+<td><code>/sym?&lt;keyword&gt;</code></td>
+<td>模糊搜索符号名称</td>
+<td><code>/sym?double.arrow</code></td>
+</tr>
+<tr>
+<td><code>/sym/&lt;keyword&gt;</code></td>
+<td>与 <code>/sym?</code> 等价的模糊搜索写法</td>
+<td><code>/sym/arrow.double</code></td>
+</tr>
+<tr>
+<td><code>/emoji.&lt;name&gt;[.&lt;mod&gt;...]</code></td>
+<td>查询 Emoji 名称</td>
+<td><code>/emoji.apple.red</code> → 🍎</td>
+</tr>
+<tr>
+<td><code>/emoji?&lt;keyword&gt;</code></td>
+<td>模糊搜索 Emoji 名称</td>
+<td><code>/emoji?red.apple</code></td>
+</tr>
+<tr>
+<td><code>/emoji/&lt;keyword&gt;</code></td>
+<td>与 <code>/emoji?</code> 等价的模糊搜索写法</td>
+<td><code>/emoji/apple.red</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">两种模糊搜索语法等价</p>
+<p><code>/sym?keyword</code> 与 <code>/sym/keyword</code> 使用相同的搜索逻辑，Emoji 同理。</p>
+<ul>
+<li><code>?</code> 更接近“搜索”语义，例如 <code>/sym?arrow</code></li>
+<li><code>/</code> 更接近路径式输入，例如 <code>/sym/arrow</code></li>
+</ul>
+<p>两种写法只是在触发形式上不同，进入的都是 <code>search</code> 模式。</p>
+</div>
+<hr />
+<h2 id="_2">二、精确查询的点分规则</h2>
+<p>Super Symbols 的精确模式并不是简单地对完整字符串做一次相等比较，而是把查询按 <code>.</code> 拆分后分别处理。</p>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>/sym.arrow.r.double
+</code></pre></div>
+<p>去掉 <code>/sym.</code> 后，实际查询为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>arrow.r.double
+</code></pre></div>
+<p>可以理解为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>根名称 . 中间修饰符 . 尾值
+</code></pre></div>
+<p>当前规则如下。</p>
+<div class="admonition tip">
+<p class="admonition-title">精确模式的匹配规则</p>
+<ol>
+<li><strong>只有一个组件时：按根名称前缀浏览</strong></li>
+</ol>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>/sym.arrow
+</code></pre></div>
+<p>此时 <code>arrow</code> 会作为根名称前缀处理。</p>
+<p>对于命中的根：</p>
+<ul>
+<li>如果该根存在裸字符，则直接给出裸字符</li>
+<li>
+<p>如果该根本身只是分类，没有裸字符，则给出 <code>（字符分类）&lt;根名&gt;</code> 占位候选</p>
+</li>
+<li>
+<p><strong>出现第二个 <code>.</code> 后：根名称改为精确匹配</strong></p>
+</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>/sym.arrow.r
+</code></pre></div>
+<p>此时 <code>arrow</code> 必须是实际存在的根名称，不再按照多个根前缀展开。</p>
+<ol>
+<li><strong>中间修饰符：精确匹配，顺序不要求与 Codex 原始名称一致</strong></li>
+</ol>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>/sym.arrow.r.double
+</code></pre></div>
+<p>中间的 <code>r</code> 必须是该条目的完整修饰符。</p>
+<ol>
+<li><strong>最后一个组件：前缀匹配</strong></li>
+</ol>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/sym.arrow.double
+</code></pre></div>
+<p><code>double</code> 作为尾值，会匹配该根下修饰符以 <code>double</code> 开头的条目。</p>
+<ol>
+<li><strong>悬垂点表示尾值为空</strong></li>
+</ol>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/sym.arrow.
+</code></pre></div>
+<p>尾值为空，因此会列出 <code>arrow</code> 分类下满足条件的全部条目。</p>
+<ol>
+<li><strong>中间修饰符会去重</strong></li>
+</ol>
+<p>查询中的中间修饰符会先做去重，再参与匹配。尾值仍单独承担前缀匹配职责。</p>
+</div>
+<h3 id="_3">关于修饰符顺序</h3>
+<p>中间修饰符采用“是否存在于该条目的修饰符集合中”进行判断，因此完整修饰符通常可以交换顺序。</p>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/sym.arrow.r.double
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>/sym.arrow.double.r
+</code></pre></div>
+<p>在对应修饰符名称都完整且无前缀歧义时，通常可以命中相同目标。</p>
+<p>不过需要注意：</p>
+<p><strong>最后一个组件始终使用前缀匹配，而不是 exact match。</strong></p>
+<p>因此如果尾值本身同时是多个修饰符的共同前缀，交换组件位置后，候选集合可能出现差异。更准确地说，Super Symbols 支持的是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>中间修饰符无序精确匹配
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>+
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>尾修饰符前缀匹配
+</code></pre></div>
+<p>而不是所有组件完全对称的任意顺序匹配。</p>
+<hr />
+<h2 id="_4">三、字符分类占位符与自动展开</h2>
+<p>部分 Codex 根名称没有对应的“裸字符”，只用于组织一组变体。</p>
+<p>此时输入根名称后，候选区会出现：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>（字符分类）&lt;根名&gt;
+</code></pre></div>
+<p>例如某个根只有多个细分变体而没有独立字符时，Super Symbols 不会把分类名称本身当作普通文本上屏。</p>
+<p>当前还提供了分类展开 Processor。</p>
+<div class="admonition info">
+<p class="admonition-title">选择字符分类即可展开</p>
+<p>当高亮候选为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>（字符分类）&lt;根名&gt;
+</code></pre></div>
+<p>使用以下方式确认：</p>
+<ul>
+<li>空格</li>
+<li>回车</li>
+<li>小键盘回车</li>
+<li>当前页对应的数字选词键</li>
+</ul>
+<p>Processor 会拦截这次上屏，并把当前输入改写为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;精确前缀&gt;.&lt;根名&gt;.
+</code></pre></div>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>/sym.arrow.
+</code></pre></div>
+<p>随后直接列出该分类下的变体。</p>
+</div>
+<p>因此分类占位符只是交互入口，不会把：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>（字符分类）arrow
+</code></pre></div>
+<p>这样的提示文本真正提交到应用程序中。</p>
+<div class="admonition note">
+<p class="admonition-title">数字键遵循当前候选页大小</p>
+<p>数字选词会根据当前 <code>menu/page_size</code> 计算候选位置。</p>
+<p><code>1-9</code> 对应相应序号，<code>0</code> 表示第 10 个候选；如果当前页面大小没有覆盖该序号，则不会触发分类展开。</p>
+</div>
+<hr />
+<h2 id="_5">四、模糊搜索规则</h2>
+<p>模糊模式由：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>/sym?
+</code></pre></div>
+<p>或：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>/sym/
+</code></pre></div>
+<p>进入，Emoji 使用同样的规则。</p>
+<h3 id="1">1. 单关键字搜索</h3>
+<p>如果关键字中没有 <code>.</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>/sym?arrow
+</code></pre></div>
+<p>则对完整 Codex 名称进行子串匹配。</p>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/sym?double
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>/sym?alpha
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>/emoji?heart
+</code></pre></div>
+<p>都不要求关键字位于名称开头。</p>
+<p>同时，单关键字模式还支持<strong>字符本身的精确反查</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>/sym?⇒
+</code></pre></div>
+<p>可以直接匹配字符为 <code>⇒</code> 的条目。</p>
+<h3 id="2">2. 点分多关键字搜索</h3>
+<p>如果关键字中包含 <code>.</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>/sym?double.arrow
+</code></pre></div>
+<p>会先拆成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>double
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>arrow
+</code></pre></div>
+<p>然后要求每个组件都能作为子串出现在目标 Codex 名称中。</p>
+<p>组件顺序不固定，因此：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>/sym?double.arrow
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>/sym?arrow.double
+</code></pre></div>
+<p>使用相同的多组件匹配思路。</p>
+<p>多组件搜索还会：</p>
+<ul>
+<li>自动去除重复组件</li>
+<li>优先处理较长组件</li>
+<li>要求所有组件同时命中</li>
+<li>最终按 Codex 名称排序输出</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">字符反查只属于无点关键字模式</p>
+<p><code>/sym?⇒</code> 这类直接输入字符的反查可以工作。</p>
+<p>但点分模糊模式的每个组件是对<strong>名称字符串</strong>做子串判断，并不会把每个组件同时当作字符进行匹配。</p>
+</div>
+<hr />
+<h2 id="_6">五、模式提示</h2>
+<p>只输入触发前缀、尚未真正查询时，候选区会显示模式提示。</p>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>候选正文</th>
+<th>候选注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym</code></td>
+<td>超级符号</td>
+<td><code>~</code></td>
+</tr>
+<tr>
+<td><code>/sym.</code></td>
+<td>超级符号</td>
+<td><code>直接输入</code></td>
+</tr>
+<tr>
+<td><code>/sym?</code></td>
+<td>超级符号</td>
+<td><code>模糊搜索</code></td>
+</tr>
+<tr>
+<td><code>/sym/</code></td>
+<td>超级符号</td>
+<td><code>模糊搜索</code></td>
+</tr>
+<tr>
+<td><code>/emoji</code></td>
+<td>超级表情</td>
+<td><code>~</code></td>
+</tr>
+<tr>
+<td><code>/emoji.</code></td>
+<td>超级表情</td>
+<td><code>直接输入</code></td>
+</tr>
+<tr>
+<td><code>/emoji?</code></td>
+<td>超级表情</td>
+<td><code>模糊搜索</code></td>
+</tr>
+<tr>
+<td><code>/emoji/</code></td>
+<td>超级表情</td>
+<td><code>模糊搜索</code></td>
+</tr>
+</tbody>
+</table>
+<p>输入实际查询内容后，才进入精确或模糊匹配流程。</p>
+<hr />
+<h2 id="typst">六、候选注释与 Typst 名称</h2>
+<p>实际符号候选的注释中会保留完整的 Typst / Codex 名称。</p>
+<p>例如输入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>/sym.arrow.double
+</code></pre></div>
+<p>候选可能显示为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>1 ⇒  sym.arrow.r.double
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>2 ⤇  sym.arrow.r.double.bar
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>3 ⟹  sym.arrow.r.double.long
+</code></pre></div>
+<p>其中：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sym.arrow.r.double
+</code></pre></div>
+<p>可以直接对应到 Typst 的符号名称。</p>
+<p>Super Symbols 在生成候选时：</p>
+<ul>
+<li><code>sym</code> 候选使用 <code>super_sym</code> 类型</li>
+<li><code>emoji</code> 候选使用 <code>super_emoji</code> 类型</li>
+</ul>
+<p><code>super_comment_preedit.lua</code> 对这两种候选类型直接放行，不再进入普通候选的注释清理流程，因此完整 Codex 名称可以持续保留。</p>
+<div class="admonition info">
+<p class="admonition-title">关闭普通候选注释不会清掉 Super Symbols 名称</p>
+<p><code>super_comment_preedit.lua</code> 检测到：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>super_sym
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>super_emoji
+</code></pre></div>
+<p>后，会直接输出原候选。</p>
+<p>因此 Super Symbols 的 Typst 名称注释不受普通拼音候选注释开关的清空逻辑影响。</p>
+</div>
+<hr />
+<h2 id="_7">七、点分命名规则</h2>
+<p>Codex 使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>根名称.修饰符.修饰符...
+</code></pre></div>
+<p>组织符号名称。</p>
+<h3 id="_8">常见修饰符</h3>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>常见含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.l .r .t .b</code></td>
+<td>左 / 右 / 上 / 下</td>
+<td><code>/sym.arrow.l</code> → ←</td>
+</tr>
+<tr>
+<td><code>.tl .tr .bl .br</code></td>
+<td>四个对角方向</td>
+<td><code>/sym.arrow.tr</code> → ↗</td>
+</tr>
+<tr>
+<td><code>.double .triple</code></td>
+<td>双线 / 三线</td>
+<td><code>/sym.arrow.r.double</code> → ⇒</td>
+</tr>
+<tr>
+<td><code>.stroked .filled</code></td>
+<td>描边 / 实心变体</td>
+<td><code>/sym.circle.stroked</code> → ○</td>
+</tr>
+<tr>
+<td><code>.not</code></td>
+<td>否定</td>
+<td><code>/sym.eq.not</code> → ≠</td>
+</tr>
+<tr>
+<td><code>.big</code></td>
+<td>大型运算符变体</td>
+<td><code>/sym.union.big</code> → ⋃</td>
+</tr>
+<tr>
+<td><code>.o</code></td>
+<td>外加圆圈</td>
+<td><code>/sym.plus.o</code> → ⊕</td>
+</tr>
+<tr>
+<td><code>.inv .rev</code></td>
+<td>倒置 / 反向变体</td>
+<td><code>/sym.ast.inv</code> → ⁂</td>
+</tr>
+<tr>
+<td><code>.white .black</code></td>
+<td>黑白变体</td>
+<td><code>/sym.chess.king.white</code> → ♔</td>
+</tr>
+<tr>
+<td><code>.alt</code></td>
+<td>替代字形</td>
+<td><code>/sym.phi.alt</code> → ϕ</td>
+</tr>
+</tbody>
+</table>
+<p>具体含义以 Codex 中对应名称为准；同一个修饰符在不同符号家族中可能承担不同的字形区分作用。</p>
+<h3 id="_9">嵌套名称</h3>
+<p>部分符号名称本身具有多层结构，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>chess.king.white
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>gender.male
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>control.del
+</code></pre></div>
+<p>对应输入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>/sym.chess.king.white
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>/sym.gender.male
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>/sym.control.del
+</code></pre></div>
+<p>从 Super Symbols 的实现角度看，第一个组件仍作为根名称，后续组件统一作为修饰符链处理。</p>
+<hr />
+<h2 id="_10">八、常用符号速查</h2>
+<h3 id="_11">希腊字母</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+<th>输入</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.alpha</code></td>
+<td>α</td>
+<td><code>/sym.Alpha</code></td>
+<td>Α</td>
+</tr>
+<tr>
+<td><code>/sym.beta</code></td>
+<td>β</td>
+<td><code>/sym.Beta</code></td>
+<td>Β</td>
+</tr>
+<tr>
+<td><code>/sym.gamma</code></td>
+<td>γ</td>
+<td><code>/sym.Gamma</code></td>
+<td>Γ</td>
+</tr>
+<tr>
+<td><code>/sym.delta</code></td>
+<td>δ</td>
+<td><code>/sym.Delta</code></td>
+<td>Δ</td>
+</tr>
+<tr>
+<td><code>/sym.pi</code></td>
+<td>π</td>
+<td><code>/sym.Pi</code></td>
+<td>Π</td>
+</tr>
+<tr>
+<td><code>/sym.omega</code></td>
+<td>ω</td>
+<td><code>/sym.Omega</code></td>
+<td>Ω</td>
+</tr>
+<tr>
+<td><code>/sym.phi</code></td>
+<td>φ</td>
+<td><code>/sym.Phi</code></td>
+<td>Φ</td>
+</tr>
+<tr>
+<td><code>/sym.psi</code></td>
+<td>ψ</td>
+<td><code>/sym.Psi</code></td>
+<td>Ψ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_12">箭头</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.arrow.r</code></td>
+<td>→</td>
+<td>右箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.l</code></td>
+<td>←</td>
+<td>左箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.t</code></td>
+<td>↑</td>
+<td>上箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.b</code></td>
+<td>↓</td>
+<td>下箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.r.double</code></td>
+<td>⇒</td>
+<td>双线右箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.l.r</code></td>
+<td>↔</td>
+<td>左右箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.tr</code></td>
+<td>↗</td>
+<td>右上箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.cw</code></td>
+<td>↻</td>
+<td>顺时针箭头</td>
+</tr>
+<tr>
+<td><code>/sym.arrow.r.squiggly</code></td>
+<td>⇝</td>
+<td>波浪右箭头</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">数学运算</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+<th>输入</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.plus</code></td>
+<td>+</td>
+<td><code>/sym.minus</code></td>
+<td>−</td>
+</tr>
+<tr>
+<td><code>/sym.times</code></td>
+<td>×</td>
+<td><code>/sym.div</code></td>
+<td>÷</td>
+</tr>
+<tr>
+<td><code>/sym.plus.o</code></td>
+<td>⊕</td>
+<td><code>/sym.times.o</code></td>
+<td>⊗</td>
+</tr>
+<tr>
+<td><code>/sym.plus.minus</code></td>
+<td>±</td>
+<td><code>/sym.eq</code></td>
+<td>=</td>
+</tr>
+<tr>
+<td><code>/sym.eq.triple</code></td>
+<td>≡</td>
+<td><code>/sym.eq.not</code></td>
+<td>≠</td>
+</tr>
+<tr>
+<td><code>/sym.lt.eq</code></td>
+<td>≤</td>
+<td><code>/sym.gt.eq</code></td>
+<td>≥</td>
+</tr>
+<tr>
+<td><code>/sym.approx</code></td>
+<td>≈</td>
+<td><code>/sym.infty</code></td>
+<td>∞</td>
+</tr>
+<tr>
+<td><code>/sym.partial</code></td>
+<td>∂</td>
+<td><code>/sym.nabla</code></td>
+<td>∇</td>
+</tr>
+<tr>
+<td><code>/sym.integral</code></td>
+<td>∫</td>
+<td><code>/sym.sum</code></td>
+<td>∑</td>
+</tr>
+<tr>
+<td><code>/sym.product</code></td>
+<td>∏</td>
+<td><code>/sym.forall</code></td>
+<td>∀</td>
+</tr>
+<tr>
+<td><code>/sym.exists</code></td>
+<td>∃</td>
+<td><code>/sym.in</code></td>
+<td>∈</td>
+</tr>
+<tr>
+<td><code>/sym.union</code></td>
+<td>∪</td>
+<td><code>/sym.inter</code></td>
+<td>∩</td>
+</tr>
+<tr>
+<td><code>/sym.subset</code></td>
+<td>⊂</td>
+<td><code>/sym.supset</code></td>
+<td>⊃</td>
+</tr>
+<tr>
+<td><code>/sym.emptyset</code></td>
+<td>∅</td>
+<td><code>/sym.angle</code></td>
+<td>∠</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">货币符号</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+<th>输入</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.dollar</code></td>
+<td>$</td>
+<td><code>/sym.euro</code></td>
+<td>€</td>
+</tr>
+<tr>
+<td><code>/sym.yen</code></td>
+<td>¥</td>
+<td><code>/sym.sterling</code></td>
+<td>£</td>
+</tr>
+<tr>
+<td><code>/sym.won</code></td>
+<td>₩</td>
+<td><code>/sym.ruble</code></td>
+<td>₽</td>
+</tr>
+<tr>
+<td><code>/sym.rupee.indian</code></td>
+<td>₹</td>
+<td><code>/sym.bitcoin</code></td>
+<td>₿</td>
+</tr>
+<tr>
+<td><code>/sym.cent</code></td>
+<td>¢</td>
+<td><code>/sym.currency</code></td>
+<td>¤</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_15">分隔符</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sym.paren.l</code></td>
+<td>(</td>
+</tr>
+<tr>
+<td><code>/sym.paren.r</code></td>
+<td>)</td>
+</tr>
+<tr>
+<td><code>/sym.bracket.l</code></td>
+<td>[</td>
+</tr>
+<tr>
+<td><code>/sym.bracket.r</code></td>
+<td>]</td>
+</tr>
+<tr>
+<td><code>/sym.brace.l</code></td>
+<td>{</td>
+</tr>
+<tr>
+<td><code>/sym.brace.r</code></td>
+<td>}</td>
+</tr>
+<tr>
+<td><code>/sym.chevron.l</code></td>
+<td>⟨</td>
+</tr>
+<tr>
+<td><code>/sym.chevron.r</code></td>
+<td>⟩</td>
+</tr>
+<tr>
+<td><code>/sym.floor.l</code></td>
+<td>⌊</td>
+</tr>
+<tr>
+<td><code>/sym.ceil.l</code></td>
+<td>⌈</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emoji">常用 Emoji</h3>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>结果</th>
+<th>输入</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/emoji.apple.red</code></td>
+<td>🍎</td>
+<td><code>/emoji.apple.green</code></td>
+<td>🍏</td>
+</tr>
+<tr>
+<td><code>/emoji.heart.red</code></td>
+<td>❤️</td>
+<td><code>/emoji.heart.broken</code></td>
+<td>💔</td>
+</tr>
+<tr>
+<td><code>/emoji.arrow.r.filled</code></td>
+<td>➡️</td>
+<td><code>/emoji.face.smile</code></td>
+<td>😊</td>
+</tr>
+<tr>
+<td><code>/emoji.fire</code></td>
+<td>🔥</td>
+<td><code>/emoji.rocket</code></td>
+<td>🚀</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_16">九、模糊搜索示例</h2>
+<p>记不清完整 Codex 名称时，可以直接搜索其中的一部分：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>/sym?arrow
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>/sym/arrow
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>/sym?double
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>/sym/double
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>/sym?triple
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>/sym/triple
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>/sym?alpha
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>/sym/alpha
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>/emoji?heart
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>/emoji/heart
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>/emoji?face
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a>/emoji/face
+</code></pre></div>
+<p>也可以使用多个点分关键字：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>/sym?arrow.double
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>/sym?double.arrow
+</code></pre></div>
+<p>如果已经知道字符本身，还可以反查：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>/sym?⇒
+</code></pre></div>
+<hr />
+<h2 id="_17">十、与现有功能的关系</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>常见触发</th>
+<th>适用场景</th>
+<th>与 Super Symbols 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标点快打</td>
+<td><code>/</code> + 字母</td>
+<td>常用标点与快捷符号</td>
+<td>独立功能；<code>/sym</code>、<code>/emoji</code> 使用自己的识别入口</td>
+</tr>
+<tr>
+<td>Unicode 码点输入</td>
+<td><code>U</code> / Unicode 相关入口</td>
+<td>已知 Unicode 码点</td>
+<td>Super Symbols 补充按名称搜索</td>
+</tr>
+<tr>
+<td>超级计算器</td>
+<td><code>V</code> 引导</td>
+<td>数学计算</td>
+<td>独立功能</td>
+</tr>
+<tr>
+<td>日期 / 时间</td>
+<td><code>/</code>、<code>N</code> 等入口</td>
+<td>日期时间内容</td>
+<td>独立功能</td>
+</tr>
+<tr>
+<td>自定义短语</td>
+<td><code>custom_phrase.txt</code></td>
+<td>高频固定文本</td>
+<td>独立功能</td>
+</tr>
+</tbody>
+</table>
+<p>Super Symbols 的重点不是替代这些功能，而是补充：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>已知符号名称或名称片段
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>→ 查找 Unicode 字符
+</code></pre></div>
+<p>这一输入方式。</p>
+<hr />
+<h2 id="tips">十一、中文 Tips 联动</h2>
+<p>万象的 <code>super_tips</code> 可以为部分 Codex 符号提供中文提示。</p>
+<p>开启后，可以在输入过程中看到类似：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>⇒ 双线右箭头
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>🍎 红苹果
+</code></pre></div>
+<p>的辅助说明。</p>
+<p>当前数据文件中已经合并了 Codex 相关中文 Tips，并与原有提示数据进行去重。</p>
+<p>当前文档所对应的数据版本记录为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>1090 条符号 Tips
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>341 条 Emoji Tips
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>合计新增 1431 条
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">数量属于当前数据快照</p>
+<p>Codex 数据和中文 Tips 后续都可能继续更新，因此条目数量不应视为永久固定值。</p>
+<p>如果仓库中的 <code>codex_sym.txt</code>、<code>codex_emoji.txt</code> 或 <code>tips_show.txt</code> 已更新，应以实际文件内容为准。</p>
+</div>
+<p>如需关闭某类提示，可根据当前 <code>super_tips</code> 配置中的类型控制项进行调整，例如符号或表情类型。</p>
+<hr />
+<h2 id="_18">十二、数据来源与文件</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+<th>当前文档记录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lua/data/codex_sym.txt</code></td>
+<td>Codex <code>sym</code> 符号数据</td>
+<td>1214 条</td>
+</tr>
+<tr>
+<td><code>lua/data/codex_emoji.txt</code></td>
+<td>Codex Emoji 数据</td>
+<td>1389 条</td>
+</tr>
+<tr>
+<td><code>lua/data/tips_show.txt</code></td>
+<td>中文输入提示数据，包含 Codex 相关 Tips</td>
+<td>Codex 部分新增 1431 条</td>
+</tr>
+<tr>
+<td><code>lua/wanxiang/super_symbols.lua</code></td>
+<td>Super Symbols Translator / Processor</td>
+<td>659 行</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">数据条数可能随上游更新</p>
+<p>表中的数量对应当前文档所使用的数据快照。</p>
+<p>后续同步新版 Codex 后，符号、Emoji 和 Tips 条数都可能变化，文档不应依赖这些数字判断功能是否正常。</p>
+</div>
+<h3 id="_19">数据格式</h3>
+<p><code>codex_sym.txt</code> 与 <code>codex_emoji.txt</code> 每行使用两个字段：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>typst_name&lt;TAB&gt;char
+</code></pre></div>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>arrow.r.double  ⇒
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>chess.king.white    ♔
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>emptyset.zero   ∅︀
+</code></pre></div>
+<p>这里的重点是：</p>
+<p><strong><code>typst_name</code> 作为一个完整字段保存。</strong></p>
+<p>程序读取后才根据 <code>.</code> 拆分为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>root
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>mods_list
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>mods_set
+</code></pre></div>
+<p>数据文件本身不会额外拆成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>symbol&lt;TAB&gt;modifier1&lt;TAB&gt;modifier2
+</code></pre></div>
+<p>这样的多列结构。</p>
+<p>数据来源于 <a href="https://github.com/typst/codex">typst/codex</a> 的符号数据。</p>
+<p>当前数据转换支持的转义形式包括：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>\u{XXXX}
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>\vs{1} ~ \vs{16}
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>\vs{text}
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>\vs{emoji}
+</code></pre></div>
+<p>其中：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>\vs{text}
+</code></pre></div>
+<p>对应文本样式 Variation Selector，</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>\vs{emoji}
+</code></pre></div>
+<p>对应 Emoji 样式 Variation Selector。</p>
+<hr />
+<h2 id="_20">十三、配置参数</h2>
+<p>默认配置由方案文件提供。个人修改建议通过 <code>wanxiang.custom.yaml</code> Patch，而不是直接修改主方案文件。</p>
+<p>Super Symbols 当前主要使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nt">super_symbols</span><span class="p">:</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nt">prefix_sym</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/sym&quot;</span>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nt">prefix_emoji</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/emoji&quot;</span>
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">  </span><span class="nt">max_candidates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="w">  </span><span class="nt">data_sym</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lua/data/codex_sym.txt&quot;</span>
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="w">  </span><span class="nt">data_emoji</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lua/data/codex_emoji.txt&quot;</span>
+</code></pre></div>
+<p>其中：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+<th>未配置时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prefix_sym</code></td>
+<td>未提供 <code>triggers</code> 时的符号精确前缀</td>
+<td><code>/sym</code></td>
+</tr>
+<tr>
+<td><code>prefix_emoji</code></td>
+<td>未提供 <code>triggers</code> 时的 Emoji 精确前缀</td>
+<td><code>/emoji</code></td>
+</tr>
+<tr>
+<td><code>max_candidates</code></td>
+<td>单次最多输出的查询候选数</td>
+<td><code>120</code></td>
+</tr>
+<tr>
+<td><code>data_sym</code></td>
+<td><code>sym</code> 数据文件路径</td>
+<td><code>lua/data/codex_sym.txt</code></td>
+</tr>
+<tr>
+<td><code>data_emoji</code></td>
+<td><code>emoji</code> 数据文件路径</td>
+<td><code>lua/data/codex_emoji.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>例如只想把最大候选数调整为 30：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="nt">patch</span><span class="p">:</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="s">&quot;super_symbols/max_candidates&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+</code></pre></div>
+<p>也可以一起修改数据路径：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nt">patch</span><span class="p">:</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="w">  </span><span class="s">&quot;super_symbols/max_candidates&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="w">  </span><span class="s">&quot;super_symbols/data_sym&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;lua/data/codex_sym.txt&quot;</span>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">  </span><span class="s">&quot;super_symbols/data_emoji&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;lua/data/codex_emoji.txt&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="triggers">十四、Triggers 配置</h2>
+<p>精确与模糊查询入口由 <code>super_symbols/triggers</code> 控制。</p>
+<p>每条触发定义包含：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>kind
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>exact
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>label
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>marks
+</code></pre></div>
+<p>其中：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kind</code></td>
+<td>数据类型，目前实际使用 <code>sym</code> 或 <code>emoji</code></td>
+</tr>
+<tr>
+<td><code>exact</code></td>
+<td>基础触发前缀，例如 <code>/sym</code></td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>模式提示正文</td>
+</tr>
+<tr>
+<td><code>marks</code></td>
+<td>模糊搜索标记，例如 <code>?</code>、<code>/</code></td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="nt">super_symbols</span><span class="p">:</span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">  </span><span class="nt">triggers</span><span class="p">:</span>
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sym</span>
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="w">      </span><span class="nt">exact</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/sym</span>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">超级符号</span>
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="w">      </span><span class="nt">marks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;?&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>
+<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">emoji</span>
+<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a><span class="w">      </span><span class="nt">exact</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/emoji</span>
+<a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a><span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">超级表情</span>
+<a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a><span class="w">      </span><span class="nt">marks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;?&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>运行时会由它们派生：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>/sym.       → exact
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>/sym?       → search
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>/sym/       → search
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>/emoji.     → exact
+<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>/emoji?     → search
+<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>/emoji/     → search
+</code></pre></div>
+<p>如果某条 trigger 没有有效的 <code>marks</code>，当前实现会回退为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="p p-Indicator">[</span><span class="s">&quot;?&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h3 id="prefix_sym-prefix_emoji-triggers"><code>prefix_sym</code> / <code>prefix_emoji</code> 与 <code>triggers</code> 的关系</h3>
+<p>如果 <code>super_symbols/triggers</code> 存在有效配置，程序会优先使用整个 <code>triggers</code> 列表。</p>
+<p>此时：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>prefix_sym
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>prefix_emoji
+</code></pre></div>
+<p>不再负责生成默认触发器。</p>
+<p>只有没有有效 <code>triggers</code> 时，才会回退为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>prefix_sym   → sym
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>prefix_emoji → emoji
+</code></pre></div>
+<hr />
+<h2 id="_21">十五、当前并不是任意数据类型加载器</h2>
+<p><code>triggers</code> 中存在 <code>kind</code> 字段，并不意味着当前版本已经支持通过 YAML 任意增加第三种数据文件。</p>
+<p>当前 <code>load_data()</code> 实际只加载：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>data_sym
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>data_emoji
+</code></pre></div>
+<p>并创建：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>sym
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>emoji
+</code></pre></div>
+<p>两个数据 Store。</p>
+<p>因此不能仅仅新增一个第三方 <code>kind</code>，再假设提供对应数据文件后就会自动生效。</p>
+<p><strong>当前源码没有通用的 <code>data_&lt;kind&gt;</code> 动态加载逻辑。</strong></p>
+<p>如果 trigger 指向不存在的 Store，Translator 会得到一个空 Store，因此不会自动产生第三类实际符号数据。</p>
+<div class="admonition warning">
+<p class="admonition-title">当前建议只配置 sym 与 emoji</p>
+<p><code>triggers</code> 更适合用于调整现有 <code>sym</code> / <code>emoji</code> 的触发前缀、提示文本和模糊搜索标记。</p>
+<p>如果以后要扩展成任意 <code>kind → data file</code> 的通用加载机制，需要同时修改数据加载、Store 建立以及分类展开 Processor，不能只追加一条 YAML trigger。</p>
+</div>
+<hr />
+<h2 id="recognizer">十六、修改前缀时的 Recognizer</h2>
+<p>Lua Translator 能识别新的 trigger，并不代表 Rime 前端一定会把新输入分配给对应的 Segment。</p>
+<p>如果修改：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>/sym
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>/emoji
+</code></pre></div>
+<p>这类入口，还需要同步检查方案中的：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>recognizer/patterns/super_sym
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>recognizer/patterns/super_emoji
+</code></pre></div>
+<p>保证 Recognizer 正则能够覆盖新的输入前缀。</p>
+<p>因此前缀修改需要同时考虑：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>Super Symbols trigger
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>+
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>Recognizer pattern
+</code></pre></div>
+<p>两部分。</p>
+<hr />
+<h2 id="_22">十七、技术实现</h2>
+<p>当前 <code>super_symbols.lua</code> 的处理流程可以概括为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>读取 Codex 数据
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>      ↓
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>按根名称建立 Store
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>      ↓
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>建立 root_map / root_list
+<a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>      ↓
+<a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>记录每条目的 mods_list / mods_set
+<a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>      ↓
+<a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>根据 triggers 判断 exact / search
+<a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>      ↓
+<a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>执行 do_exact / do_fuzzy
+<a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a>      ↓
+<a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a>生成 super_sym / super_emoji 候选
+</code></pre></div>
+<h3 id="1_1">1. 数据加载</h3>
+<p>每行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>typst_name&lt;TAB&gt;char
+</code></pre></div>
+<p>读取后，名称按 <code>.</code> 拆分。</p>
+<p>例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>arrow.r.double
+</code></pre></div>
+<p>会形成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>root      = arrow
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>mods_list = [r, double]
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>mods_set  = { r = true, double = true }
+</code></pre></div>
+<p>同时按根建立：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>root_map
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>root_list
+</code></pre></div>
+<p>如果某个名称没有修饰符，则把对应字符记录为该根的：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>bare
+</code></pre></div>
+<p>供单根查询直接使用。</p>
+<h3 id="2-do_exact">2. 精确查询 <code>do_exact</code></h3>
+<p><code>do_exact</code> 根据点分组件数量选择两种路径：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>单组件
+<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>→ 根名称前缀浏览
+<a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>
+<a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>两组件及以上
+<a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>→ 根 exact
+<a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>→ 中间 modifier exact
+<a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>→ 尾 modifier prefix
+</code></pre></div>
+<p>匹配结果会按：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>修饰符数量较少优先
+<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>→ 名称字典序
+</code></pre></div>
+<p>排列。</p>
+<h3 id="3-do_fuzzy">3. 模糊查询 <code>do_fuzzy</code></h3>
+<p>无点关键字：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>完整名称子串匹配
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>或
+<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>字符精确匹配
+</code></pre></div>
+<p>有点关键字：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>拆分组件
+<a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>→ 去重
+<a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>→ 全部组件都必须是名称子串
+<a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>→ 组件顺序不限
+</code></pre></div>
+<p>无点模糊搜索保持数据文件中的原始顺序，因此达到 <code>max_candidates</code> 后可以提前停止继续收集。</p>
+<p>点分模糊搜索需要先收集匹配项并按名称排序，再裁剪到候选上限。</p>
+<h3 id="4-processor">4. 分类展开 Processor</h3>
+<p>模块同时导出 Processor：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>P
+</code></pre></div>
+<p>它负责识别：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>（字符分类）&lt;根名&gt;
+</code></pre></div>
+<p>候选。</p>
+<p>确认该候选时，不提交文本，而是把输入改写成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>&lt;exact&gt;.&lt;root&gt;.
+</code></pre></div>
+<p>实现分类浏览。</p>
+<h3 id="5-translator-processor">5. Translator / Processor 导出</h3>
+<p>当前模块最终返回：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a><span class="w">    </span><span class="nv">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">M</span><span class="p">,</span>
+<a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="w">    </span><span class="nv">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">P</span>
+<a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>也就是说当前对外导出的是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>T → Translator
+<a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>P → Processor
+</code></pre></div>
+<p>当前版本<strong>没有</strong>原文旧说明中的 <code>_internals</code> 导出项。</p>
+<h3 id="6">6. 注释保留</h3>
+<p>候选类型：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>super_sym
+<a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>super_emoji
+</code></pre></div>
+<p>会被 <code>super_comment_preedit.lua</code> 直接放行，因此 Typst / Codex 完整名称不会被普通候选注释过滤流程清空。</p>
+<hr />
+<h2 id="_23">十八、使用建议</h2>
+<p>如果记得完整名称，优先使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>/sym.&lt;name&gt;
+<a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>/emoji.&lt;name&gt;
+</code></pre></div>
+<p>如果只记得部分名称，可以使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>/sym?&lt;keyword&gt;
+<a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>/emoji?&lt;keyword&gt;
+</code></pre></div>
+<p>如果想同时限定多个特征，可以使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>/sym?arrow.double
+<a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>/sym?double.arrow
+</code></pre></div>
+<p>如果只记得大致分类，可以先输入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>/sym.arrow
+</code></pre></div>
+<p>再选择 <code>（字符分类）</code> 候选展开。</p>
+<p>对于 Typst 用户，候选注释中的完整：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>sym.*
+<a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>emoji.*
+</code></pre></div>
+<p>名称还可以作为对应 Typst 代码的参考。</p>
+<hr />
+<div align="center" style="opacity: 0.5; font-size: 0.85em; margin-top: 2rem; font-style: italic;">
+    <em>Super Symbols 以 Codex 点分名称为索引，同时提供精确查询、组合修饰符查询、模糊搜索和分类展开。</em>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 万象拼音 · 开源项目文档
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
