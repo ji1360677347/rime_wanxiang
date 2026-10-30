@@ -5,7 +5,7 @@ local wanxiang = {}
 
 -- x-release-please-start-version
 
-wanxiang.version = "v17.3.0"
+wanxiang.version = "v18.1.8"
 
 -- x-release-please-end
 
@@ -110,7 +110,7 @@ end
 ---判断是否在命令模式
 ---@param context Context | nil
 ---@return boolean
-function wanxiang.is_function_mode_active(context)
+function wanxiang.is_function_mode(context)
     if not context or not context.composition or context.composition:empty() then
         return false
     end
@@ -122,13 +122,12 @@ function wanxiang.is_function_mode_active(context)
         seg:has_tag("unicode") or    -- unicode.lua 输出 Unicode 字符 U+小写字母或数字
         --seg:has_tag("punct") or      -- 标点符号 全角半角提示
         seg:has_tag("calculator") or -- super_calculator.lua V键计算器
-        seg:has_tag("shijian") or    -- shijian.lua /rq /sr 等与时间日期相关功能
-        seg:has_tag("Ndate")       -- shijian.lua N日期功能
+        seg:has_tag("shijian")       -- shijian.lua 时间日期相关功能
 end
 
 ---@param context Context | nil
 ---@return boolean
-function wanxiang.s2t_conversion(context)
+function wanxiang.is_special_mode(context)
     if not context or not context.composition or context.composition:empty() then
         return false
     end
@@ -140,8 +139,8 @@ function wanxiang.s2t_conversion(context)
         seg:has_tag("unicode") or    -- unicode.lua 输出 Unicode 字符 U+小写字母或数字
         seg:has_tag("punct") or      -- 标点符号 全角半角提示
         seg:has_tag("calculator") or -- super_calculator.lua V键计算器
-        seg:has_tag("shijian") or    -- shijian.lua /rq /sr 等与时间日期相关功能
-        seg:has_tag("Ndate") or      -- shijian.lua N日期功能
+        seg:has_tag("shijian") or    -- shijian.lua 时间日期相关功能
+        seg:has_tag("super_symbol") or    -- 超级符号
         seg:has_tag("wanxiang_reverse")
 end
 ---判断文件是否存在
@@ -263,6 +262,72 @@ function wanxiang.get_user_id()
     installation_file:close()
     return user_id
 end
+---@class WanxiangRegexMatcher
+---@field projection Projection
+---@field pattern string
+
+-- Projection 没有直接暴露 bool match 接口；这里用单条 erase 规则把
+-- “完整匹配 / 不匹配”映射为“空字符串 / 原字符串”。
+-- matcher 在初始化时构建一次，热路径只执行已编译正则的匹配。
+-- 此做法缘起规避直接暴露的接口在一些Linux机型上导致fcitx5异常退出，但其缓存初始化的做法其实在性能上更优。
+local REGEX_DELIMITERS = { "#", "%", ";", "~", "|", "@", "/", "!", ",", "=", "_" }
+
+---@param pattern string
+---@return WanxiangRegexMatcher|nil matcher
+---@return string|nil error_message
+function wanxiang.compile_regex(pattern)
+    if type(pattern) ~= "string" or pattern == "" then
+        return nil, "pattern must be a non-empty string"
+    end
+
+    local delimiter = nil
+    for _, candidate in ipairs(REGEX_DELIMITERS) do
+        if not pattern:find(candidate, 1, true) then
+            delimiter = candidate
+            break
+        end
+    end
+
+    if not delimiter then
+        return nil, "pattern contains every supported projection delimiter"
+    end
+
+    local projection = Projection()
+    local rule = "erase" .. delimiter .. pattern .. delimiter
+    local ok, loaded = pcall(function()
+        return projection:load({ rule })
+    end)
+
+    if not ok then
+        return nil, tostring(loaded)
+    end
+    if not loaded then
+        return nil, "projection rejected pattern: " .. pattern
+    end
+
+    return {
+        projection = projection,
+        pattern = pattern,
+    }
+end
+
+---@param matcher WanxiangRegexMatcher|nil
+---@param input string
+---@return boolean
+function wanxiang.regex_matches(matcher, input)
+    if not matcher or not matcher.projection or type(input) ~= "string" then
+        return false
+    end
+
+    -- erase 匹配成功和“空输入未匹配”都会得到空字符串，因此该兼容层
+    -- 明确只用于当前两处非空编码匹配场景。
+    if input == "" then
+        return false
+    end
+
+    return matcher.projection:apply(input, true) == ""
+end
+
 wanxiang.INPUT_METHOD_MARKERS = {
     ["Ⅰ"] = "pinyin",   -- 全拼
     ["Ⅱ"] = "zrm",      -- 自然码双拼
@@ -281,7 +346,8 @@ wanxiang.INPUT_METHOD_MARKERS = {
     ["Ⅾ"] = "sdpy",     -- 首道双拼
     ["ⅲ"] = "ⅲ",        -- 间接辅助标记
     ["ⅱ"] = "t9",       -- 拼音九键
---Ⅹ  --万象保留
+    ["Ⅹ"] = "wxsp",     -- 万象双拼
+
 --ↀ  --备用名额不多了，谁再发明双拼掂量一下必要性。。。
 --ↁ
 --ↂ
@@ -291,7 +357,7 @@ wanxiang.INPUT_METHOD_MARKERS = {
 -- “ⅲ”属于辅助标记，单独检测，不放入正常输入类型顺序。
 local INPUT_METHOD_MARKER_ORDER = {
     "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ",
-    "Ⅸ", "Ⅹ", "Ⅺ", "Ⅻ", "Ⅿ", "Ⅼ", "Ⅽ", "ⅱ",
+    "Ⅸ", "Ⅹ", "Ⅺ", "Ⅻ", "Ⅿ", "Ⅼ", "Ⅽ", "Ⅾ", "ⅱ",
 }
 
 local INPUT_METHOD_MD_MARKER = "ⅲ"
@@ -338,372 +404,4 @@ function wanxiang.get_input_method_type(env)
     return result_id
 end
 
--- Wanxiang Regex > Lua Pattern
--- 支持：分组、嵌套分支、? 可选项、常用字符类及基础转义
--- 不支持：断言、反向引用、{m,n}、分组后的 * 和 +
-
-local RegexParser = {}
-
-local s_sub = string.sub
-local t_concat = table.concat
-
--- Lua Pattern 中需要使用 % 转义的字符。
--- "|"虽然不是Lua魔法字符，但在解析阶段表示分支，也需要转义保护。
-local LUA_MAGIC = {
-    ["^"] = true,
-    ["$"] = true,
-    ["("] = true,
-    [")"] = true,
-    ["%"] = true,
-    ["."] = true,
-    ["["] = true,
-    ["]"] = true,
-    ["*"] = true,
-    ["+"] = true,
-    ["-"] = true,
-    ["?"] = true,
-    ["|"] = true,
-}
-
-local REGEX_CLASSES = {
-    d = true,
-    D = true,
-    w = true,
-    W = true,
-    s = true,
-    S = true,
-}
-
-local function escape_lua_literal(char)
-    if LUA_MAGIC[char] then return "%" .. char end
-    return char
-end
-
--- 转换字符类内部内容，例如：
--- [0-9]
--- [a-zA-Z]
--- [^\d]
--- [a\-z]
-local function normalize_class(regex, start_pos, result)
-    local len = #regex
-    local i = start_pos + 1
-
-    result[#result + 1] = "["
-
-    -- 字符类开头的 ^ 表示取反
-    if s_sub(regex, i, i) == "^" then
-        result[#result + 1] = "^"
-        i = i + 1
-    end
-
-    -- ] 位于字符类首位时表示字面量
-    if s_sub(regex, i, i) == "]" then
-        result[#result + 1] = "]"
-        i = i + 1
-    end
-
-    while i <= len do
-        local char = s_sub(regex, i, i)
-
-        if char == "\\" then
-            local next_char = s_sub(regex, i + 1, i + 1)
-
-            if next_char == "" then
-                result[#result + 1] = "\\"
-                return i + 1
-            end
-
-            if REGEX_CLASSES[next_char] then
-                result[#result + 1] = "%" .. next_char
-            else
-                result[#result + 1] = escape_lua_literal(next_char)
-            end
-
-            i = i + 2
-        elseif char == "%" then
-            -- Regex 中的普通 % 在 Lua Pattern 中必须写成 %%
-            result[#result + 1] = "%%"
-            i = i + 1
-        else
-            result[#result + 1] = char
-            i = i + 1
-
-            if char == "]" then return i end
-        end
-    end
-
-    return i
-end
-
---- 将受支持的Regex语法转换为中间Lua Pattern格式。
----@param regex string
----@return string
-function RegexParser.normalize(regex)
-    local result = {}
-    local i = 1
-    local len = #regex
-
-    while i <= len do
-        local char = s_sub(regex, i, i)
-
-        if char == "\\" then
-            local next_char = s_sub(regex, i + 1, i + 1)
-
-            if next_char == "" then
-                result[#result + 1] = "\\"
-                i = i + 1
-            elseif REGEX_CLASSES[next_char] then
-                -- \d、\w、\s等转换为Lua字符类
-                result[#result + 1] = "%" .. next_char
-                i = i + 2
-            else
-                -- \.、\?、\|等转为Lua字面量
-                result[#result + 1] = escape_lua_literal(next_char)
-                i = i + 2
-            end
-        elseif char == "[" then
-            i = normalize_class(regex, i, result)
-        elseif char == "%" then
-            result[#result + 1] = "%%"
-            i = i + 1
-        elseif char == "(" and s_sub(regex, i + 1, i + 2) == "?:" then
-            -- Lua Pattern不区分捕获组和非捕获组；
-            -- 后续解析会直接展开并移除分组。
-            result[#result + 1] = "("
-            i = i + 3
-        elseif char == "-" then
-            -- Regex中字符类外的 - 是普通字符；
-            -- Lua Pattern中 - 是最短匹配量词，需要转义。
-            result[#result + 1] = "%-"
-            i = i + 1
-        else
-            result[#result + 1] = char
-            i = i + 1
-        end
-    end
-
-    return t_concat(result)
-end
-
-local function append_all(target, source)
-    for i = 1, #source do
-        target[#target + 1] = source[i]
-    end
-end
-
--- 将左侧已有组合与右侧原子/分支做笛卡尔积
-local function combine(left, right)
-    local result = {}
-
-    for i = 1, #left do
-        local prefix = left[i]
-
-        for j = 1, #right do
-            result[#result + 1] = prefix .. right[j]
-        end
-    end
-
-    return result
-end
-
--- 从已经normalize后的Lua Pattern中读取完整字符类
-local function read_class(pattern, start_pos)
-    local len = #pattern
-    local i = start_pos + 1
-
-    if s_sub(pattern, i, i) == "^" then i = i + 1 end
-    if s_sub(pattern, i, i) == "]" then i = i + 1 end
-
-    while i <= len do
-        local char = s_sub(pattern, i, i)
-
-        if char == "%" then
-            -- 跳过Lua转义字符，例如 %]、%-、%d
-            i = i + 2
-        elseif char == "]" then
-            return s_sub(pattern, start_pos, i), i + 1
-        else
-            i = i + 1
-        end
-    end
-
-    return nil, start_pos
-end
-
-local parse_expression
-
--- 递归解析分支与分组。
---
--- 例如：
---   (ab|cd)e
--- 转换为：
---   abe
---   cde
---
---   (ab|cd)?e
--- 转换为：
---   abe
---   cde
---   e
-parse_expression = function(pattern, start_pos, stop_char)
-    local alternatives = {}
-    local sequence = { "" }
-    local len = #pattern
-    local pos = start_pos
-
-    while pos <= len do
-        local char = s_sub(pattern, pos, pos)
-
-        if stop_char and char == stop_char then
-            append_all(alternatives, sequence)
-            return alternatives, pos + 1
-        elseif char == "|" then
-            append_all(alternatives, sequence)
-            sequence = { "" }
-            pos = pos + 1
-        elseif char == ")" or char == "?" or char == "*" or char == "+" then
-            -- 出现未配对右括号或没有前置原子的量词
-            return nil, pos
-        else
-            local atom
-            local is_group = false
-
-            if char == "(" then
-                atom, pos = parse_expression(pattern, pos + 1, ")")
-                if not atom then return nil, pos end
-                is_group = true
-            elseif char == "[" then
-                local token, next_pos = read_class(pattern, pos)
-                if not token then return nil, next_pos end
-
-                atom = { token }
-                pos = next_pos
-            elseif char == "%" then
-                if pos >= len then return nil, pos end
-
-                atom = { s_sub(pattern, pos, pos + 1) }
-                pos = pos + 2
-            else
-                atom = { char }
-                pos = pos + 1
-            end
-
-            local quantifier = s_sub(pattern, pos, pos)
-
-            if quantifier == "?" then
-                -- 原子或整个分组可选
-                atom[#atom + 1] = ""
-                pos = pos + 1
-            elseif quantifier == "*" or quantifier == "+" then
-                -- Lua Pattern支持单原子重复，但不支持整个分组重复
-                if is_group then return nil, pos end
-
-                atom[1] = atom[1] .. quantifier
-                pos = pos + 1
-            end
-
-            sequence = combine(sequence, atom)
-        end
-    end
-
-    -- 指定了结束括号但扫描结束，说明分组未闭合
-    if stop_char then return nil, pos end
-
-    append_all(alternatives, sequence)
-    return alternatives, pos
-end
-
-local function is_escaped(pattern, pos)
-    local count = 0
-    pos = pos - 1
-
-    while pos >= 1 and s_sub(pattern, pos, pos) == "%" do
-        count = count + 1
-        pos = pos - 1
-    end
-
-    return count % 2 == 1
-end
-
-local function ensure_anchor(pattern)
-    -- 空分支对应精确匹配空字符串
-    if pattern == "" then return "^$" end
-
-    if s_sub(pattern, 1, 1) ~= "^" then
-        pattern = "^" .. pattern
-    end
-
-    local len = #pattern
-    local last = s_sub(pattern, len, len)
-
-    -- 末尾不是未转义的 $ 时补齐结束锚点
-    if last ~= "$" or is_escaped(pattern, len) then
-        pattern = pattern .. "$"
-    end
-
-    return pattern
-end
-
---- 将Regex字符串转换为一组确定的Lua Pattern。
----@param regex_str string
----@return table
-function RegexParser.convert(regex_str)
-    if type(regex_str) ~= "string" or regex_str == "" then return {} end
-
-    local normalized = RegexParser.normalize(regex_str)
-    local expanded = parse_expression(normalized, 1, nil)
-
-    -- 出现未闭合分组、字符类或不支持的语法时忽略本条规则
-    if not expanded then return {} end
-
-    local patterns = {}
-    local seen = {}
-
-    for i = 1, #expanded do
-        local pattern = ensure_anchor(expanded[i])
-
-        if not seen[pattern] then
-            seen[pattern] = true
-            patterns[#patterns + 1] = pattern
-        end
-    end
-
-    return patterns
-end
-
---- 从ConfigMap中加载并转换Regex规则。
----@param config Config
----@param path string
----@return table
-function wanxiang.load_regex_patterns(config, path)
-    local patterns = {}
-    local seen = {}
-
-    local map = config:get_map(path)
-    if not map then return patterns end
-
-    -- ConfigMap:keys()正式返回Lua键名列表
-    local keys = map:keys()
-    if not keys then return patterns end
-
-    for i = 1, #keys do
-        local value = map:get_value(keys[i])
-        local regex = value and value.value
-
-        if type(regex) == "string" and regex ~= "" then
-            local converted = RegexParser.convert(regex)
-
-            for j = 1, #converted do
-                local pattern = converted[j]
-
-                if not seen[pattern] then
-                    seen[pattern] = true
-                    patterns[#patterns + 1] = pattern
-                end
-            end
-        end
-    end
-
-    return patterns
-end
 return wanxiang

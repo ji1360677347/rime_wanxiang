@@ -1,10 +1,9 @@
 -- 万象家族 Lua：超级提示、表情、化学式、方程式、简码等直接上屏，不占用候选位置
--- 采用 LevelDb 数据库，支持大数据遍历、多种类型及编码混合
+-- 采用 LevelDb 真 KV 数据库，支持大数据查询、多种类型及编码混合
 -- 支持候选匹配和编码匹配，候选支持方向键高亮遍历
 -- https://github.com/amzxyz/rime-wanxiang
 --
 -- super_tips:
---   db_name: "tips"
 --   tips_key: "slash"
 --   disabled_types: []
 --   files:
@@ -14,13 +13,13 @@
 local wanxiang = require("wanxiang/wanxiang")
 local userdb = require("wanxiang/userdb")
 
-local RECORD_SEPARATOR = " \t"
-local DEFAULT_RECORD_TAIL = "c=0 d=0 t=0"
-local DB_FORMAT_VERSION = "1"
+local DB_NAME = "build/tips"
+local DB_FORMAT_VERSION = "2"
 
 local DEFAULT_PRESET = "lua/data/tips_show.txt"
 local DEFAULT_USER = "lua/data/tips_user.txt"
-local db_states = {}
+
+local runtime_load_state = false
 
 local META_KEY = {
     version = "db_format_version",
@@ -87,18 +86,19 @@ local function load_data_from_files(files, db, disabled_types)
 
         if file then
             for line in file:lines() do
-                local current_line = line:gsub("\r$", "")
-                local value, key =
-                    current_line:match("^([^\t]+)\t([^\t]+)$")
+                local pos = line:find("\t", 1, true)
 
-                if key and value and not is_disabled(value, disabled_types) then
-                    local raw_key = key .. RECORD_SEPARATOR .. value
+                if pos and pos > 1 and pos < #line then
+                    local value = line:sub(1, pos - 1)
+                    local key = line:sub(pos + 1)
 
-                    if not db:update(
-                        raw_key, DEFAULT_RECORD_TAIL
-                    ) then
-                        close()
-                        return false
+                    if key:sub(-1) == "\r" then key = key:sub(1, -2) end
+
+                    if key ~= "" and not is_disabled(value, disabled_types) then
+                        if not db:update(key, value) then
+                            close()
+                            return false
+                        end
                     end
                 end
             end
@@ -110,24 +110,9 @@ local function load_data_from_files(files, db, disabled_types)
     return true
 end
 
--- 关闭数据库包装器；共享池只保存成功打开的实例。
-local function close_database(db)
-    if not db then return end
-    collectgarbage()
-    if db:loaded() then db:close() end
-end
-
--- 初始化或复用按 db_name 隔离的模块私有数据库。
+-- 初始化提示数据库。
+-- 数据库固定在 build/tips；build 已由部署阶段创建，数据库不存在时由底层创建自身目录。
 local function init_database(config)
-    local db_name = config:get_string("super_tips/db_name")
-    if not db_name or db_name == "" then db_name = "tips" end
-
-    local state = db_states[db_name]
-    if state then
-        state.refs = state.refs + 1
-        return state.db, db_name
-    end
-
     local disabled_types = {}
     local disabled_keys = {}
     local disabled_list = config:get_list("super_tips/disabled_types")
@@ -148,57 +133,53 @@ local function init_database(config)
     local disabled_fingerprint = table.concat(disabled_keys, "|")
 
     local files = {}
-    local files_list = config:get_list("super_tips/files")
 
+    -- 支持数组
+    local files_list = config:get_list("super_tips/files")
     if files_list then
         for i = 0, files_list.size - 1 do
             local entry = files_list:get_value_at(i)
-            local value = entry and entry.value
-
+            local value = entry and entry:get_string()
             if value and value ~= "" then
                 files[#files + 1] = value
             end
+        end
+    else
+        -- 支持单个字符串
+        local file_str = config:get_string("super_tips/files")
+        if file_str and file_str ~= "" then
+            files[#files + 1] = file_str
         end
     end
 
     if #files == 0 then files = {DEFAULT_PRESET, DEFAULT_USER} end
 
-    local db = userdb.LevelDb(db_name)
+    local db = userdb.LevelDb(DB_NAME)
     if not db then return nil end
 
-    local signature = generate_files_signature(files)
-    local needs_rebuild = true
-
-    -- 稳定路径只读打开一次，元数据一致时直接保留句柄。
-    if db:open_read_only() then
-        local db_version = db:meta_fetch(META_KEY.version) or ""
-        local db_disabled = db:meta_fetch(META_KEY.disabled_types) or ""
-        local db_signature = db:meta_fetch(META_KEY.files_sig) or ""
-
-        needs_rebuild = db_version ~= DB_FORMAT_VERSION
-            or db_disabled ~= disabled_fingerprint
-            or db_signature ~= signature
-
-        if not needs_rebuild then
-            db_states[db_name] = {db = db, refs = 1}
-            return db, db_name
-        end
-
-        db:close()
-    end
-
-    -- 仅在数据库不存在或数据变化时进入读写模式。
-    if not db:open() then
-        close_database(db)
+    if not db:loaded() and not db:open() then
         return nil
     end
 
-    local cleared
-    if db.clear then
-        cleared = db:clear()
-    else
-        cleared = db:empty(true)
+    if runtime_load_state then
+        return db
     end
+
+    local signature = generate_files_signature(files)
+    local db_version = db:meta_fetch(META_KEY.version) or ""
+    local db_disabled = db:meta_fetch(META_KEY.disabled_types) or ""
+    local db_signature = db:meta_fetch(META_KEY.files_sig) or ""
+
+    local needs_rebuild = db_version ~= DB_FORMAT_VERSION
+        or db_disabled ~= disabled_fingerprint
+        or db_signature ~= signature
+
+    if not needs_rebuild then
+        runtime_load_state = true
+        return db
+    end
+
+    local cleared = db:empty(true)
 
     if cleared == false
         or not load_data_from_files(files, db, disabled_types)
@@ -208,68 +189,37 @@ local function init_database(config)
         )
         or not db:meta_update(META_KEY.files_sig, signature)
     then
-        close_database(db)
         return nil
     end
-
-    db:close()
-
-    if not db:open_read_only() then
-        close_database(db)
-        return nil
-    end
-
-    collectgarbage("collect")
-    db_states[db_name] = {db = db, refs = 1}
-    return db, db_name
+    runtime_load_state = true
+    return db
 end
 
--- 释放当前组件引用，并在最后一个使用者退出时关闭数据库。
+-- 当前组件只释放 Lua 引用，不主动关闭可能被其他组件共享的底层数据库。
 local function release_database(env)
-    local db_name = env.tips_db_name
-
     env.tips_db = nil
-    env.tips_db_name = nil
-
-    local state = db_name and db_states[db_name]
-    if not state then return end
-
-    state.refs = state.refs - 1
-    if state.refs > 0 then return end
-
-    db_states[db_name] = nil
-    close_database(state.db)
+    -- 数据库固定为 build/tips；这里只释放 Lua 引用，不主动关闭共享底层实例。
+    collectgarbage()
 end
 
--- 按逻辑 key 查询并解析提示 value。
+-- 真 KV：逻辑 key 直接对应提示 value。
 local function fetch_tip(db, key)
-    local prefix = key .. RECORD_SEPARATOR
-    local accessor = db:query(prefix)
-    if not accessor then return nil end
-
-    local value
-
-    for raw_key in accessor:iter() do
-        if raw_key:sub(1, #prefix) ~= prefix then break end
-        value = raw_key:sub(#prefix + 1)
-        break
-    end
-
-    accessor = nil
+    local value = db:fetch(key)
     return value ~= "" and value or nil
 end
 
--- 从编码或候选文本中查询提示。
-local function get_tip(env, keys)
+-- 从编码或候选文本中查询提示；按 key1 -> key2 顺序精确 fetch，不创建临时 table。
+local function get_tip(env, key1, key2)
     local db = env.tips_db
     if not db then return nil end
-    if type(keys) == "string" then keys = {keys} end
 
-    for _, key in ipairs(keys) do
-        if key and key ~= "" then
-            local value = fetch_tip(db, key)
-            if value then return value end
-        end
+    if key1 and key1 ~= "" then
+        local value = fetch_tip(db, key1)
+        if value then return value end
+    end
+
+    if key2 and key2 ~= "" and key2 ~= key1 then
+        return fetch_tip(db, key2)
     end
 
     return nil
@@ -290,7 +240,7 @@ local function update_tips_prompt(context, env)
     local candidate = context:get_selected_candidate() or {}
 
     if segment.selected_index < env.engine.schema.page_size then
-        env.current_tip = get_tip(env, {context.input, candidate.text})
+        env.current_tip = get_tip(env, context.input, candidate.text)
     else
         env.current_tip = get_tip(env, candidate.text)
     end
@@ -306,17 +256,10 @@ end
 
 local P = {}
 
--- 初始化处理器、共享数据库引用和提示更新通知器。
+-- 初始化处理器、数据库引用和提示更新通知器。
 function P.init(env)
-    if env.tips_update_connection then
-        env.tips_update_connection:disconnect()
-        env.tips_update_connection = nil
-    end
-
-    release_database(env)
-
     local config = env.engine.schema.config
-    env.tips_db, env.tips_db_name = init_database(config)
+    env.tips_db = init_database(config)
     env.tips_key = config:get_string("super_tips/tips_key")
     env.last_prompt = env.last_prompt or ""
 
@@ -326,7 +269,7 @@ function P.init(env)
         end)
 end
 
--- 断开通知器，并在最后一个同名数据库使用者退出时关闭数据库。
+-- 断开通知器并释放当前组件持有的数据库引用。
 function P.fini(env)
     if env.tips_update_connection then
         env.tips_update_connection:disconnect()
@@ -347,7 +290,7 @@ function P.func(key, env)
     if not context:get_option("super_tips")
         or not env.tips_key
         or env.tips_key ~= key:repr()
-        or wanxiang.is_function_mode_active(context)
+        or wanxiang.is_function_mode(context)
         or not env.current_tip
         or env.current_tip == ""
     then

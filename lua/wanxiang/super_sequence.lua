@@ -8,7 +8,6 @@
 -- 5) 已经手动排序过的候选若再次被挤动，只更新它自己的最终位置
 -- 6) c<0 为重置墓碑；墓碑版本高于旧状态，可通过原生 UserDb 同步传播
 
--- ✨ 是给上一层滤镜传递排序上下文信息的代码，不用时便于删除
 local wanxiang = require("wanxiang/wanxiang")
 local userdb   = require("wanxiang/userdb")
 local byte     = string.byte
@@ -23,7 +22,8 @@ local DEFAULT_SEQ_KEY = {
     pin = "Control+p",
 }
 
-local MAX_SORT_CANDIDATES = 500
+local MAX_SORT_CANDIDATES = 100
+local DB_POSITION_LIMIT = 500
 local POSITION_BASE = 512
 local TOMBSTONE_SLOT = 511
 local C_MAX = 2147483000
@@ -118,9 +118,9 @@ local function decode_state(commits)
     local slot = magnitude % POSITION_BASE
 
     if commits < 0 then return version, nil, false end
-    if slot < 1 or slot > MAX_SORT_CANDIDATES then return version, nil, false end
+    if slot < 1 or slot > DB_POSITION_LIMIT then return version, nil, false end
 
-    local position = MAX_SORT_CANDIDATES + 1 - slot
+    local position = DB_POSITION_LIMIT + 1 - slot
     return version, position, true
 end
 
@@ -134,9 +134,9 @@ end
 
 local function encode_active(version, position)
     version = math.max(1, math.min(MAX_VERSION, tonumber(version) or 1))
-    position = math.max(1, math.min(MAX_SORT_CANDIDATES, tonumber(position) or 1))
+    position = math.max(1, math.min(DB_POSITION_LIMIT, tonumber(position) or 1))
 
-    local slot = MAX_SORT_CANDIDATES + 1 - position
+    local slot = DB_POSITION_LIMIT + 1 - position
     return version * POSITION_BASE + slot
 end
 
@@ -149,7 +149,8 @@ end
 -- 四、DB、缓存与旧数据迁移
 ------------------------------------------------------------
 local RECORD_CACHE_LIMIT = 128
-local DB_POOL = {}
+-- 仅共享排序缓存状态；弱引用不会阻止组件退出后的状态与数据库包装器回收。
+local SEQUENCE_STATES = setmetatable({}, { __mode = "v" })
 
 local function resolve_db_name(config)
     local db_name = config and config:get_string("super_sequence/db_name") or nil
@@ -161,68 +162,35 @@ local function resolve_db_name(config)
     return db_name ~= "" and db_name or "lua/sequence"
 end
 
--- 获取当前组件对应的模块私有共享状态；Filter 不增加数据库引用。
-local function get_sequence_state(env)
-    local db_name = env.sequence_db_name
-        or resolve_db_name(env.engine.schema.config)
-    env.sequence_db_name = db_name
-    return DB_POOL[db_name]
-end
+-- Processor / Filter 按 db_name 共享同一排序缓存状态。数据库包装器本身不再手工计数或关闭。
+local function get_sequence_state(env, config)
+    if env.sequence_state then return env.sequence_state end
 
--- Processor 获取数据库引用；同名数据库共用包装器与缓存。
-local function acquire_sequence_db(env, config)
-    if env.sequence_db_attached then
-        local state = get_sequence_state(env)
-        return state and state.db or nil
-    end
-
-    local db_name = resolve_db_name(config)
-    local state = DB_POOL[db_name]
+    config = config or env.engine.schema.config
+    local db_name = env.sequence_db_name or resolve_db_name(config)
+    local state = SEQUENCE_STATES[db_name]
 
     if not state then
         local db = userdb.LevelDb(db_name)
-        if not db or not db:loaded() and not db:open() then return nil end
+        if not db or (not db:loaded() and not db:open()) then return nil end
 
         state = {
-            db = db, refs = 0, cache = {},
+            db = db, cache = {},
             cache_size = 0, cache_clock = 0,
         }
-        DB_POOL[db_name] = state
-    elseif not state.db or not state.db:loaded() and not state.db:open() then
-        DB_POOL[db_name] = nil
-        return nil
+        SEQUENCE_STATES[db_name] = state
     end
 
-    state.refs = state.refs + 1
     env.sequence_db_name = db_name
-    env.sequence_db_attached = true
-    return state.db
+    env.sequence_state = state
+    return state
 end
 
--- Processor 释放数据库引用，并在最后一个使用者退出时关闭。
-local function release_sequence_db(env)
-    if not env or not env.sequence_db_attached then return end
-
-    local db_name = env.sequence_db_name
-    env.sequence_db_attached = nil
+local function release_sequence_state(env)
+    if not env then return end
+    env.sequence_state = nil
     env.sequence_db_name = nil
-
-    local state = db_name and DB_POOL[db_name]
-    if not state then return end
-
-    state.refs = math.max(0, state.refs - 1)
-    if state.refs > 0 then return end
-
-    DB_POOL[db_name] = nil
-    state.cache = {}
-    state.cache_size = 0
-    state.cache_clock = 0
-
-    local db = state.db
-    state.db = nil
-
     collectgarbage()
-    if db and db:loaded() then db:close() end
 end
 
 local function invalidate_input_cache(state, input)
@@ -275,7 +243,7 @@ local function load_input_records(state, input)
     end
 
     local records = {}
-    local has_active = false
+    local active_count = 0
     local prefix = input .. RECORD_SEPARATOR
     local prefix_len = #prefix
     local accessor = state.db:query(prefix)
@@ -285,9 +253,6 @@ local function load_input_records(state, input)
             if raw_key:find(prefix, 1, true) ~= 1 then break end
 
             local item = raw_key:sub(prefix_len + 1)
-
-            -- 旧格式 value 会以 i=... 开头；它已经迁移并写成墓碑，
-            -- 不再进入新的候选位置表。
             if item and item ~= "" and not item:match("^i=.- p=") then
                 local commits, tick = parse_record_tail(tail)
                 local version, position, active = decode_state(commits)
@@ -295,22 +260,22 @@ local function load_input_records(state, input)
                 records[item] = {
                     commits = commits,
                     tick = tick,
-                    tail = tail,
                     version = version,
                     position = position,
                     active = active,
                 }
 
-                if active then has_active = true end
+                if active then active_count = active_count + 1 end
             end
         end
-
-        accessor = nil
     end
+
+    accessor = nil
 
     cached = {
         records = records,
-        has_active = has_active,
+        active_count = active_count,
+        has_active = active_count > 0,
     }
     touch_cached_entry(state, cached)
 
@@ -318,32 +283,35 @@ local function load_input_records(state, input)
     state.cache_size = state.cache_size + 1
     trim_record_cache(state)
 
-    return records, has_active
+    return records, active_count > 0
 end
 
-local function update_cached_record(state, input, item, commits, tick, tail)
+local function update_cached_record(state, input, item, commits, tick)
     local cached = state.cache[input]
     if not cached then return end
 
     touch_cached_entry(state, cached)
+    local old_record = cached.records[item]
+    local old_active = old_record and old_record.active or false
     local version, position, active = decode_state(commits)
 
     cached.records[item] = {
         commits = commits,
         tick = tick,
-        tail = tail,
         version = version,
         position = position,
         active = active,
     }
 
-    cached.has_active = false
-    for _, record in pairs(cached.records) do
-        if record.active then
-            cached.has_active = true
-            break
+    if old_active ~= active then
+        if active then
+            cached.active_count = cached.active_count + 1
+        else
+            cached.active_count = math.max(0, cached.active_count - 1)
         end
     end
+
+    cached.has_active = cached.active_count > 0
 end
 
 local function write_active_position(state, input, item, position, records)
@@ -359,13 +327,12 @@ local function write_active_position(state, input, item, position, records)
     local tail = make_record_tail(commits, tick)
     if not tail or not state.db:update(raw_key, tail) then return false end
 
-    update_cached_record(state, input, item, commits, tick, tail)
+    update_cached_record(state, input, item, commits, tick)
     records[item] = state.cache[input]
         and state.cache[input].records[item]
         or {
             commits = commits,
             tick = tick,
-            tail = tail,
             version = version,
             position = position,
             active = true,
@@ -386,13 +353,12 @@ local function write_reset_tombstone(state, input, item, records)
     local tail = make_record_tail(commits, record.tick)
     if not tail or not state.db:update(raw_key, tail) then return false end
 
-    update_cached_record(state, input, item, commits, record.tick, tail)
+    update_cached_record(state, input, item, commits, record.tick)
     records[item] = state.cache[input]
         and state.cache[input].records[item]
         or {
             commits = commits,
             tick = record.tick,
-            tail = tail,
             version = version,
             position = nil,
             active = false,
@@ -404,18 +370,6 @@ end
 ------------------------------------------------------------
 -- 五、排序状态
 ------------------------------------------------------------
-local seq_property = { ADJUST_KEY = "sequence_adjustment_code" }
-
-function seq_property.get(context)
-    return context:get_property(seq_property.ADJUST_KEY)
-end
-
-function seq_property.reset(context)
-    local code = seq_property.get(context)
-    if code ~= nil and code ~= "" then
-        context:set_property(seq_property.ADJUST_KEY, "")
-    end
-end
 
 local curr_state = {}
 curr_state.ADJUST_MODE = {
@@ -594,10 +548,6 @@ local function apply_current_adjustment(state, input, entries, records)
         table.insert(entries, to_position, candidate)
     end
 
-    for position, entry in ipairs(entries) do
-        entry.final_position = position
-    end
-
     if curr_state.is_reset_mode() then
         -- 重置只删除当前候选的手动状态。
         write_reset_tombstone(state, input, selected_key, records)
@@ -613,12 +563,13 @@ local function apply_current_adjustment(state, input, entries, records)
         )
     end
 
-    if moved then
-        -- 仅修正此前就有手动记录、这次又被当前操作挤动的候选。
-        -- 从未主动排序过的普通候选只在内存中自然让位，不落库。
-        for position, entry in ipairs(entries) do
-            local key = entry.sort_key
+    -- 同一轮同时更新最终位置，并在发生移动时修正此前已有手排记录的候选，
+    -- 避免对 entries 再做一轮完整扫描。普通候选被动让位仍不落库。
+    for position, entry in ipairs(entries) do
+        entry.final_position = position
 
+        if moved then
+            local key = entry.sort_key
             if key ~= selected_key and active_before[key] then
                 persist_entry_position(
                     state,
@@ -636,7 +587,7 @@ local function apply_current_adjustment(state, input, entries, records)
 end
 
 ------------------------------------------------------------
--- 七、Processor（含 Ctrl 标记）
+-- 七、Processor
 ------------------------------------------------------------
 local P = {}
 
@@ -649,12 +600,12 @@ function P.init(env)
         pin = config:get_string("super_sequence/pin") or DEFAULT_SEQ_KEY.pin,
     }
 
-    acquire_sequence_db(env, config)
+    get_sequence_state(env, config)
 end
 
 function P.fini(env)
     env.seq_keys = nil
-    release_sequence_db(env)
+    release_sequence_state(env)
 end
 
 local function process_adjustment(context)
@@ -686,24 +637,9 @@ function P.func(key_event, env)
     local down = seq_keys.down
     local reset = seq_keys.reset
     local pin = seq_keys.pin
-    local is_ctrl_key = code == 0xffe3 or code == 0xffe4
 
-    -- Ctrl 监听，用于开关可视化标记。
-    if is_ctrl_key then
-        if context.composition:empty() then
-            return wanxiang.RIME_PROCESS_RESULTS.kNoop
-        end
-
-        local current = context:get_option("_seq_show_markers")
-        local target = not key_event:release()
-
-        if current ~= target then
-            local segment = context.composition:back()
-            curr_state.highlight_index = segment.selected_index
-            context:set_option("_seq_show_markers", target)
-            process_adjustment(context)
-        end
-
+    if wanxiang.is_function_mode(context) then
+        curr_state.reset()
         return wanxiang.RIME_PROCESS_RESULTS.kNoop
     end
 
@@ -715,24 +651,16 @@ function P.func(key_event, env)
         or not selected_candidate
         or not selected_candidate.text
     then
-        if context:get_option("_seq_show_markers") then
-            context:set_option("_seq_show_markers", false)
-        end
-
         return wanxiang.RIME_PROCESS_RESULTS.kNoop
     end
 
-    local is_function_mode = wanxiang.is_function_mode_active(context)
-    local adjust_code
+    local adjust_code = context.input:sub(1, context.caret_pos)
 
-    if is_function_mode then
-        local value = seq_property.get(context)
-        if value and value ~= "" then adjust_code = value end
-    else
-        adjust_code = context.input:sub(1, context.caret_pos)
-    end
-
-    if not is_function_mode and is_single_lowercase_letter(adjust_code) then
+    -- 单字母编码不执行排序，但排序快捷键必须在 Rime 内吞掉，避免继续穿透给操作系统。
+    if is_single_lowercase_letter(adjust_code) then
+        if key_repr == up or key_repr == down or key_repr == reset or key_repr == pin then
+            return wanxiang.RIME_PROCESS_RESULTS.kAccepted
+        end
         return wanxiang.RIME_PROCESS_RESULTS.kNoop
     end
 
@@ -749,11 +677,6 @@ function P.func(key_event, env)
         curr_state.offset = nil
         curr_state.mode = curr_state.ADJUST_MODE.Pin
     else
-        if context:get_option("_seq_show_markers") then
-            context:set_option("_seq_show_markers", false)
-            process_adjustment(context)
-        end
-
         return wanxiang.RIME_PROCESS_RESULTS.kNoop
     end
 
@@ -765,7 +688,7 @@ function P.func(key_event, env)
 end
 
 ------------------------------------------------------------
--- 八、Filter（含标记可视化）
+-- 八、Filter
 ------------------------------------------------------------
 local F = {}
 
@@ -778,18 +701,24 @@ function F.init(env)
 
     env.symbol = string.sub(symbol, 1, 1)
     env.page_size = config and config:get_int("menu/page_size") or 5
-    env.sequence_db_name = resolve_db_name(config)
+    get_sequence_state(env, config)
 end
 
-local function extract_adjustment_code(context, is_function_mode)
-    if is_function_mode then
-        local code = seq_property.get(context)
-        if code and code ~= "" then return code end
-        return nil
+function F.fini(env)
+    local shared = _G.WanxiangSharedState
+    if shared then
+        shared.sorter_active = false
+        shared.last_input = ""
+        if shared.page_cache then
+            clear_array(shared.page_cache)
+        end
     end
 
-    return context.input:sub(1, context.caret_pos)
+    env.symbol = nil
+    env.page_size = nil
+    release_sequence_state(env)
 end
+
 
 function F.func(input, env)
     -- ✨ 宣告：排序脚本活着，包裹脚本不要自行处理。
@@ -809,17 +738,19 @@ function F.func(input, env)
     end
 
     local cache_limit = (env.page_size or 5) * 2
-    local is_function_mode = wanxiang.is_function_mode_active(context)
-    local adjustment_allowed = not (
-        is_function_mode and seq_property.get(context) == nil
-    )
 
-    if not adjustment_allowed then
+    if wanxiang.is_function_mode(context) then
+        curr_state.reset()
         return yield_original_list(input, has_symbol, cache_limit, page_cache)
     end
 
-    local adjust_code = extract_adjustment_code(context, is_function_mode)
-    if not adjust_code or adjust_code == "" then
+    local adjust_code = context.input:sub(1, context.caret_pos)
+    if adjust_code == "" then
+        return yield_original_list(input, has_symbol, cache_limit, page_cache)
+    end
+
+    -- 单个小写字母不参与手动排序；Filter 也直接透传，避免进入 sequence DB 查询。
+    if is_single_lowercase_letter(adjust_code) then
         return yield_original_list(input, has_symbol, cache_limit, page_cache)
     end
 
@@ -838,7 +769,6 @@ function F.func(input, env)
 
     local entries = {}
     local seen = {}
-    local show_markers = context:get_option("_seq_show_markers")
     local iterator, iterator_state, iterator_control = input:iter()
     local raw_position = 0
     local scanned = 0
@@ -859,9 +789,7 @@ function F.func(input, env)
             entries[#entries + 1] = {
                 cand = candidate,
                 phrase = text,
-                sort_key = is_function_mode
-                    and tostring(raw_position - 1)
-                    or text,
+                sort_key = text,
                 raw_position = raw_position,
                 final_position = raw_position,
             }
@@ -877,25 +805,6 @@ function F.func(input, env)
         entry.final_position = position
         local candidate = entry.cand
 
-        if show_markers and not is_function_mode then
-            local record = records[entry.sort_key]
-
-            if record and record.active then
-                local diff = position - entry.raw_position
-                local mark
-
-                if diff > 0 then
-                    mark = "+" .. diff
-                elseif diff < 0 then
-                    mark = tostring(diff)
-                else
-                    mark = " ●"
-                end
-
-                candidate.comment = (candidate.comment or "") .. mark
-            end
-        end
-
         if not has_symbol and bottom_count < cache_limit then
             page_cache[#page_cache + 1] = clone_candidate(candidate)
             bottom_count = bottom_count + 1
@@ -904,7 +813,7 @@ function F.func(input, env)
         yield(candidate)
     end
 
-    -- 第 501 个及之后的候选不参与排序，保持上游顺序继续惰性透传。
+    -- 第 101 个及之后的候选不参与排序，保持上游顺序继续惰性透传。
     while true do
         local candidate = iterator(iterator_state, iterator_control)
         iterator_control = candidate

@@ -86,6 +86,40 @@ local shichen_data = {
 
 local ke_names = { "初刻", "二刻", "三刻", "四刻", "五刻", "六刻", "七刻", "八刻" }
 
+local relative_week_tokens = {
+    ["\\上周一"] = { week = -1, weekday = 1 },
+    ["\\上周二"] = { week = -1, weekday = 2 },
+    ["\\上周三"] = { week = -1, weekday = 3 },
+    ["\\上周四"] = { week = -1, weekday = 4 },
+    ["\\上周五"] = { week = -1, weekday = 5 },
+    ["\\上周六"] = { week = -1, weekday = 6 },
+    ["\\上周日"] = { week = -1, weekday = 7 },
+    ["\\本周一"] = { week =  0, weekday = 1 },
+    ["\\本周二"] = { week =  0, weekday = 2 },
+    ["\\本周三"] = { week =  0, weekday = 3 },
+    ["\\本周四"] = { week =  0, weekday = 4 },
+    ["\\本周五"] = { week =  0, weekday = 5 },
+    ["\\本周六"] = { week =  0, weekday = 6 },
+    ["\\本周日"] = { week =  0, weekday = 7 },
+    ["\\下周一"] = { week =  1, weekday = 1 },
+    ["\\下周二"] = { week =  1, weekday = 2 },
+    ["\\下周三"] = { week =  1, weekday = 3 },
+    ["\\下周四"] = { week =  1, weekday = 4 },
+    ["\\下周五"] = { week =  1, weekday = 5 },
+    ["\\下周六"] = { week =  1, weekday = 6 },
+    ["\\下周日"] = { week =  1, weekday = 7 },
+}
+
+local relative_day_tokens = {
+    ["\\大前天"] = -3,
+    ["\\前天"]   = -2,
+    ["\\昨天"]   = -1,
+    ["\\今天"]   = 0,
+    ["\\明天"]   = 1,
+    ["\\后天"]   = 2,
+    ["\\大后天"] = 3,
+}
+
 local function get_shichen_and_ke(hour, min)
     local total_minutes = hour * 60 + min
     for _, shichen in ipairs(shichen_data) do
@@ -203,6 +237,66 @@ local function build_datetime_map(dt)
     }
 end
 
+local function format_relative_week_token(token)
+    local spec = relative_week_tokens[token]
+    if not spec then return nil end
+
+    local now = os.date("*t")
+    local current_weekday = (now.wday == 1) and 7 or (now.wday - 1)
+    local delta_days = spec.week * 7 + (spec.weekday - current_weekday)
+    local target_ts = os.time({
+        year = now.year, month = now.month, day = now.day + delta_days,
+        hour = 12, min = 0, sec = 0, isdst = nil
+    })
+    if not target_ts then return nil end
+
+    local target_dt = os.date("*t", target_ts)
+    local map = build_datetime_map(target_dt)
+    return map.N .. "月" .. map.j .. "日"
+end
+
+local function format_relative_day_token(token)
+    local offset = relative_day_tokens[token]
+    if not offset then return nil end
+
+    local now = os.date("*t")
+
+    local target_ts = os.time({
+        year = now.year,
+        month = now.month,
+        day = now.day + offset,
+        hour = 12,
+        min = 0,
+        sec = 0,
+        isdst = nil
+    })
+
+    if not target_ts then return nil end
+
+    local target_dt = os.date("*t", target_ts)
+    local map = build_datetime_map(target_dt)
+
+    return map.N .. "月" .. map.j .. "日"
+end
+
+local function match_relative_week_token(text, pos)
+    for token in pairs(relative_week_tokens) do
+        if sub(text, pos, pos + #token - 1) == token then
+            return token
+        end
+    end
+    return nil
+end
+
+local function match_relative_day_token(text, pos)
+    for token in pairs(relative_day_tokens) do
+        if sub(text, pos, pos + #token - 1) == token then
+            return token
+        end
+    end
+
+    return nil
+end
 -- 3. 转义处理：严格按源文本从左到右消费，每个片段只解释一次。
 local function apply_escape_fast(text)
     if not text or not find(text, "\\", 1, true) then return text, false end
@@ -240,6 +334,28 @@ local function apply_escape_fast(text)
             if i == len then
                 push("\\")
                 break
+            end
+
+            local relative_token = match_relative_week_token(text, i)
+            if relative_token then
+                local relative_text = format_relative_week_token(relative_token)
+                if relative_text then
+                    push(relative_text)
+                    changed = true
+                    i = i + #relative_token
+                    goto continue
+                end
+            end
+
+            local relative_day_token = match_relative_day_token(text, i)
+            if relative_day_token then
+                local relative_text = format_relative_day_token(relative_day_token)
+                if relative_text then
+                    push(relative_text)
+                    changed = true
+                    i = i + #relative_day_token
+                    goto continue
+                end
             end
 
             local next_char = sub(text, i + 1, i + 1)
@@ -350,6 +466,13 @@ local function clone_candidate(c)
     nc.preedit = c.preedit
     nc.quality = c.quality
     return nc
+end
+
+local function clear_array(t)
+    if not t then return end
+    for i = #t, 1, -1 do
+        t[i] = nil
+    end
 end
 --  包裹映射
 local default_wrap_map = {
@@ -568,9 +691,17 @@ function M.init(env)
 end
 
 function M.fini(env)
+    clear_array(env.page_cache)
+    env.page_cache = nil
     env.wrap_map = nil
     env.wrap_parts = nil
+    env.wrap_delimiter = nil
+    env.symbol = nil
+    env.page_size = nil
+    env.cand_type_symbols = nil
     env.last_2code_char = nil
+
+    -- _G.WanxiangSharedState 是排序器与本过滤器的通信通道，不能在这里销毁。
 end
 
 function M.func(input, env)
@@ -580,7 +711,7 @@ function M.func(input, env)
     -- 1. 空环境清理
     if not code or code == "" or (comp and comp:empty()) then
         env.last_2code_char = nil
-        env.page_cache = {}
+        clear_array(env.page_cache)
         for cand in input:iter() do
             yield(cand)
         end
@@ -605,8 +736,14 @@ function M.func(input, env)
     local symbol_pos = symbol and sym_len > 0 and find(code, symbol, 1, true)
     local code_has_symbol = symbol_pos and symbol_pos > 1 or false
 
+    -- 连续输入两个触发符表示取消包裹；先更新状态，再清理上一轮锁定快照。
+    local is_double = (code_len >= sym_len * 2) and (sub(code, -(sym_len * 2)) == symbol .. symbol)
+    if is_double then
+        code_has_symbol = false
+    end
+
     if not code_has_symbol then
-        env.page_cache = {}
+        clear_array(env.page_cache)
     end
 
     local wrap_key = nil
@@ -616,12 +753,6 @@ function M.func(input, env)
         if key ~= "" and env.wrap_map[key] then
             wrap_key = key
         end
-    end
-
-    -- 检查是否连续打出双斜杠 \\（取消包裹）
-    local is_double = (code_len >= sym_len * 2) and (sub(code, -(sym_len * 2)) == symbol .. symbol)
-    if is_double then
-        code_has_symbol = false
     end
 
     -- 定位排序脚本是否存活并获取目标缓存
@@ -735,7 +866,7 @@ function M.func(input, env)
         end
     end
     -- PHASE 3: 三码空候选兜底
-    if idx == 0 and seg_len == 3 and not wanxiang.s2t_conversion(ctx) then
+    if idx == 0 and seg_len == 3 and sub(code, 1, 1) ~= "/" and not wanxiang.is_special_mode(ctx) then
         local fallback_text = env.last_2code_char
 
         if fallback_text then

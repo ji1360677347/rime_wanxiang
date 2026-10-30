@@ -2,8 +2,35 @@
 -- 自动造词
 local AP = {}
 
--- 注释缓存：text -> comment（只给中文造词用）
-local comment_cache = {}
+local function clear_comment_cache(env)
+    local cache = env.comment_cache
+    if not cache then return end
+    for key in pairs(cache) do
+        cache[key] = nil
+    end
+end
+
+local function release_runtime(env)
+    if env._commit_conn then
+        pcall(function() env._commit_conn:disconnect() end)
+        env._commit_conn = nil
+    end
+
+    if env._delete_conn then
+        pcall(function() env._delete_conn:disconnect() end)
+        env._delete_conn = nil
+    end
+
+    if env.memory then
+        pcall(function() env.memory:disconnect() end)
+        env.memory = nil
+    end
+
+    if env.en_memory then
+        pcall(function() env.en_memory:disconnect() end)
+        env.en_memory = nil
+    end
+end
 
 -- 工具：是否纯英文（ASCII 且至少 1 个字母）
 local function is_ascii_word(text)
@@ -49,6 +76,8 @@ function AP.is_chinese_only(text)
 end
 
 function AP.init(env)
+    env.comment_cache = {}
+
     local config = env.engine.schema.config
     local ctx    = env.engine.context
 
@@ -58,8 +87,21 @@ function AP.init(env)
     local enable_user_dict  =
         config:get_bool("add_user_dict/enable_user_dict") or false
 
-    -- 中文：add_user_dict（受 add_* 开关影响）
-    if enable_auto_phrase and enable_user_dict then
+    -- add_user_dict 的控制前缀会单独形成一个无候选 Segment。
+    -- 提交造词时需要识别并跳过它，不能把它当成正文 Segment。
+    env.add_user_dict_prefix = config:get_string("add_user_dict/prefix") or "``"
+
+    -- 主 translator 用户词开关开启时，写入主 translator 用户词典；
+    -- 未开启时，完全沿用原有 add_user_dict 配置分支（Pro）。
+    env.main_translator_mode =
+        config:get_bool("translator/enable_user_dict") or false
+    env.reverse_lookup_pending = false
+    env.reverse_lookup_base = nil
+    env.reverse_key = config:get_string("wanxiang_lookup/key") or "`"
+
+    if env.main_translator_mode then
+        env.memory = Memory(env.engine, env.engine.schema)
+    elseif enable_auto_phrase and enable_user_dict then
         env.memory = Memory(env.engine, env.engine.schema, "add_user_dict")
     else
         env.memory = nil
@@ -78,52 +120,50 @@ function AP.init(env)
     -- 删除事件只用于清理中文造词的注释缓存。
     if env.memory then
         env._delete_conn = ctx.delete_notifier:connect(function()
-            comment_cache = {}
+            clear_comment_cache(env)
         end)
     end
 end
 
 function AP.fini(env)
-    if env._commit_conn then
-        env._commit_conn:disconnect()
-        env._commit_conn = nil
-    end
-
-    if env._delete_conn then
-        env._delete_conn:disconnect()
-        env._delete_conn = nil
-    end
-
-    if env.memory then
-        env.memory:disconnect()
-        env.memory = nil
-    end
-
-    if env.en_memory then
-        env.en_memory:disconnect()
-        env.en_memory = nil
-    end
+    release_runtime(env)
+    clear_comment_cache(env)
+    env.comment_cache = nil
 end
 
-function AP.save_comment_cache(cand, genuine)
+function AP.save_comment_cache(cand, genuine, env)
     local text = cand.text
     local comment = genuine.comment
+    local cache = env.comment_cache
 
-    if text and text ~= "" and comment and comment ~= "" then
-        comment_cache[text] = comment
+    if cache and text and text ~= "" and comment and comment ~= "" then
+        cache[text] = comment
     end
 end
 
 -- 入口
 function AP.func(input, env)
+    if env.main_translator_mode then
+        local current_input = env.engine.context.input or ""
+        local marker_pos = env.reverse_key ~= "" and current_input:find(env.reverse_key, 1, true) or nil
+        if marker_pos then
+            env.reverse_lookup_pending = true
+            env.reverse_lookup_base = current_input:sub(1, marker_pos - 1)
+        elseif env.reverse_lookup_pending and current_input ~= env.reverse_lookup_base then
+            -- super_lookup 可能在提交前移除引导符；输入恰好回到 base 时保留状态，
+            -- 其余输入变化则清除，避免后续普通上屏误触发特殊写入。
+            env.reverse_lookup_pending = false
+            env.reverse_lookup_base = nil
+        end
+    end
+
     local use_comment_cache = env.memory ~= nil  -- 只有中文造词才需要缓存注释
 
     for cand in input:iter() do
-        local genuine_cand    = cand:get_genuine()
-        local initial_comment = genuine_cand.comment
+        local genuine_cand = cand:get_genuine()
 
         if use_comment_cache then
-            AP.save_comment_cache(cand, genuine_cand)
+            AP.save_comment_cache(cand, genuine_cand, env)
         end
 
         yield(cand)
@@ -132,8 +172,13 @@ end
 
 -- 造词
 function AP.commit_handler(ctx, env)
+    local comment_cache = env.comment_cache
+    local reverse_lookup_pending = env.reverse_lookup_pending == true
+    env.reverse_lookup_pending = false
+    env.reverse_lookup_base = nil
+
     if not ctx or not ctx.composition then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
@@ -164,25 +209,33 @@ function AP.commit_handler(ctx, env)
             end
         end
 
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
     ---------------------------------------------------
     -- ② 中文自动造词
     ---------------------------------------------------
+    -- 主 translator 用户词开启时，普通上屏由 Rime 原生机制处理；
+    -- 本脚本只接管带 wanxiang_lookup 引导符的反查提交。
+    -- 主 translator 开关关闭时，Pro 的 add_user_dict 逻辑完全沿用原样。
+    if env.main_translator_mode and not reverse_lookup_pending then
+        clear_comment_cache(env)
+        return
+    end
+
     if not env.memory then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
     -- 基础检查
     if segments_count <= 1 or utf8.len(commit_text) <= 1 then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
     if not AP.is_chinese_only(commit_text) or comment_cache[commit_text] then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
@@ -195,13 +248,21 @@ function AP.commit_handler(ctx, env)
         local seg  = segments[i]
         local cand = seg:get_selected_candidate()
 
-        -- 无候选：可能是符号段
+        -- 无候选：先判断是否只是 add_user_dict 的控制前缀段。
+        -- Segment.start/_end 是 context.input 中的 0 起始区间，Lua sub 为 1 起始且右端包含。
         if not cand then
+            local seg_input = raw_input:sub(seg.start + 1, seg._end)
+
+            if seg_input == env.add_user_dict_prefix then
+                -- 例如开头的 `` 会独立形成一个无候选 Segment；它不属于造词正文。
+                goto continue
+            end
+
             if i == segments_count then
-                -- 最后一个 segment 无候选，允许跳过
+                -- 最后一个 segment 无候选，允许跳过（保留原逻辑）
                 goto continue
             else
-                comment_cache = {}
+                clear_comment_cache(env)
                 return
             end
         end
@@ -215,7 +276,7 @@ function AP.commit_handler(ctx, env)
                 -- 最后一个 segment 无编码，允许跳过
                 goto continue
             else
-                comment_cache = {}
+                clear_comment_cache(env)
                 return
             end
         end
@@ -230,14 +291,14 @@ function AP.commit_handler(ctx, env)
 
     -- 最终至少需要一个编码片段
     if #code_table == 0 then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
     -- 检查编码片段数量是否与 commit_text 的字数一致
     local total_chars = utf8.len(commit_text)
     if #code_table ~= total_chars then
-        comment_cache = {}
+        clear_comment_cache(env)
         return
     end
 
@@ -246,10 +307,7 @@ function AP.commit_handler(ctx, env)
     dictEntry.weight      = 1
     dictEntry.custom_code = table.concat(code_table, " ") .. " "
     env.memory:update_userdict(dictEntry, 1, "")
-
-    if raw_input == "" then
-        comment_cache = {}
-    end
+    clear_comment_cache(env)
 end
 
 return AP
